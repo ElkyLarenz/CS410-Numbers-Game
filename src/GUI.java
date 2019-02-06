@@ -3,7 +3,7 @@ public class GUI
 
     GUI()
     {
-        //constructor
+        //default constructor
 
     }
 
