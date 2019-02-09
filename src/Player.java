@@ -7,6 +7,12 @@ public class Player
         //default constructor
 
     }
+    @Override
+    public String toString()
+    {
+        return PlayerName;
+    }
+
 
     public Player(String name)
     {
