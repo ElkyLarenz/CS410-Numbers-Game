@@ -4,9 +4,9 @@ package gui;
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
-public class GameScreen extends JFrame
+public class GameFrame extends JFrame
 {
-	public GameScreen()
+	public GameFrame()
 	{
 		
 	}

@@ -4,9 +4,9 @@ package gui;
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
-public class LobbyScreen extends JFrame
+public class LobbyFrame extends JFrame
 {
-	public LobbyScreen()
+	public LobbyFrame()
 	{
 		
 	}
