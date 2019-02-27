@@ -2,24 +2,21 @@ import java.util.ArrayList;
 
 class Lobby {
     private ArrayList<Player> players;
-    private Boolean full;
+    private Boolean notFull;
 
     Lobby() {
-        full = false;
+        notFull = true;
     }
 
-    boolean addPlayer(Player player){
-        if(!full) {
+    void addPlayer(Player player){
+        if(notFull) {
             players.add(player);
             checkFull();
-            return true;
         }
-        else
-            return false;
     }
 
     private void checkFull(){
-        full = players.size() < 4;
+        notFull = players.size() < 4;
     }
 
     boolean removePlayer(Player player){
@@ -30,11 +27,7 @@ class Lobby {
         return players;
     }
 
-    public Boolean getState() {
-        return full;
-    }
-
-    public void setState(Boolean state) {
-        this.full = state;
+    Boolean getState() {
+        return notFull;
     }
 }
