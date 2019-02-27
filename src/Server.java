@@ -1,9 +1,10 @@
-package network;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ListIterator;
 
 class Server {
     private ServerSocket serverSocket;
@@ -18,7 +19,7 @@ class Server {
         connectClients();
     }
 
-    // gets the ip address of current device
+    // finds the ip address of current device
     private String findIPaddress() throws SocketException, UnknownHostException {
        final DatagramSocket ds = new DatagramSocket();
        ds.connect(InetAddress.getByName("8.8.8.8"), 10002);
@@ -51,9 +52,25 @@ class Server {
                 String inLine;
                 while((inLine = in.readLine()) != null){
                     System.out.println(inLine);
+                    readConnectionMessage(inLine);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+
+        }
+    }
+
+    private void readConnectionMessage(String inputString){
+        ListIterator<String> in;
+        List<String> inputList = Arrays.asList(inputString.split(","));
+        in = inputList.listIterator();
+
+        while(in.hasNext()){
+            switch(in.next()){
+                case "NAME":
+                    lobby.addPlayer(new Player(in.next()));
+                    break;
             }
 
         }

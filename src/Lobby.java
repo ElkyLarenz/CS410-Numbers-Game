@@ -1,16 +1,14 @@
-package network;
-
 import java.util.ArrayList;
 
 class Lobby {
-    private ArrayList<Game.Player> players;
+    private ArrayList<Player> players;
     private Boolean full;
 
     Lobby() {
         full = false;
     }
 
-    boolean addPlayer(Game.Player player){
+    boolean addPlayer(Player player){
         if(!full) {
             players.add(player);
             checkFull();
@@ -24,11 +22,11 @@ class Lobby {
         full = players.size() < 4;
     }
 
-    boolean removePlayer(Game.Player player){
+    boolean removePlayer(Player player){
         return players.remove(player);
     }
 
-    public ArrayList<Game.Player> getPlayers() {
+    public ArrayList<Player> getPlayers() {
         return players;
     }
 
