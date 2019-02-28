@@ -10,6 +10,8 @@ package numbersgame;
         Jose Tolentino
  */
 
+import java.io.IOException;
+
 /*
 Assumptions:
 ·         There are 4 players. Players are named P1, P2, P3, and P4. The players are on three different machines.
@@ -45,33 +47,25 @@ Output:
           Populated Excel workbook
 */
 
-
-
-
-
 import java.util.*;
 
 import numbersgame.gui.GUI;
 
 public class Driver
 {
-
     public static void main(String[] args)
     {
         //All code so far is done as if there is only 4 players
     	
         GUI gui = new GUI();
-        Game game = new Game();
-        game.setGUI(gui);
-        gui.setGame(game);
-        new Numbers();
-        new Player();
-
-
-
-
- 
-
+        Game game;
+		try {
+			game = new Game();
+			game.setGUI( gui );
+			gui.setGame( game );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
-
 }

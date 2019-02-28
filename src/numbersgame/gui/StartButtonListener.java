@@ -1,3 +1,10 @@
+
+/**
+ * StartButtonListener
+ * 
+ * An ActionListener for LobbyButton buttons.
+ */
+
 package numbersgame.gui;
 
 import java.awt.event.ActionEvent;
@@ -18,6 +25,14 @@ public class StartButtonListener implements ActionListener
 		{
 			LobbyButton button = (LobbyButton) e.getSource();
 			
+			lobbyWindow.displayNameInput();
+			
+			if ( button.getText().equals( "Host Game" ) )
+			{
+				lobbyWindow.getGUI().makeHost();
+			}
+		
+			lobbyWindow.showLobbyScreen();
 		}
 	}
 }

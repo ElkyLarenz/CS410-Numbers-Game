@@ -1,4 +1,12 @@
 
+/**
+ * LobbyFrame
+ * 
+ * What's displayed when the application is first started.
+ * Lets the player to decide to host a game or join a game, set their name,
+ * and displays information.
+ */
+
 package numbersgame.gui;
 
 import java.awt.BorderLayout;
@@ -11,26 +19,32 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import numbersgame.Player;
 
 @SuppressWarnings("serial")
 public class LobbyFrame extends JFrame
 {
 	private JPanel mainPanel;
 	private Dimension defaultDimension = GUI.defaultWindowSize;
+	private GUI gui;
 	
-	private Font titleFont = new Font( "Helvetica", Font.BOLD, 24 );
+	public static Font titleFont = new Font( "Helvetica", Font.BOLD, 24 );
 	
-	public LobbyFrame()
+	public LobbyFrame( GUI gui )
 	{
-		defaultDimension = new Dimension( 640, 480 );
+		this.gui = gui;
 		this.setTitle( "Game Lobby" );
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		this.setSize( defaultDimension );
 		showStartScreen();
 	}
 	
+	// The start screen gives the player the option of joining
+	// or hosting a game.
 	public void showStartScreen()
 	{
 		Container content = this.getContentPane();
@@ -57,11 +71,42 @@ public class LobbyFrame extends JFrame
 		content.add( mainPanel );
 	}
 	
+	// The lobby screen is used before the game and between rounds.
+	// It displays information about the other players.
 	public void showLobbyScreen()
 	{
 		Container content = this.getContentPane();
 		content.removeAll();
 		
 		mainPanel = new JPanel();
+		
+		mainPanel.setLayout( new GridLayout( 2, 2 ) );
+		// temporary players for testing purposes.
+		mainPanel.add( new LobbyPlayerPanel( new Player( "Albert" ), 1 ) );
+		mainPanel.add( new LobbyPlayerPanel( new Player( "Barry" ), 2 ) );
+		mainPanel.add( new LobbyPlayerPanel( new Player( "Chris" ), 3 ) );
+		mainPanel.add( new LobbyPlayerPanel( new Player( "Derek" ), 4 ) );
+		
+		content.add( mainPanel );
+
+		refresh();
+	}
+	
+	public void displayNameInput()
+	{
+		String playerName = JOptionPane.showInputDialog( "Enter your name" );
+		
+		gui.setPlayerName( playerName );
+	}
+	
+	public GUI getGUI()
+	{
+		return gui;
+	}
+	
+	public void refresh()
+	{
+		this.validate();
+		this.repaint();
 	}
 }
