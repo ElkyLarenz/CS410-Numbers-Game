@@ -6,6 +6,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,10 +17,10 @@ import javax.swing.SwingConstants;
 @SuppressWarnings("serial")
 public class LobbyFrame extends JFrame
 {
-	JPanel mainPanel;
-	Dimension defaultDimension;
+	private JPanel mainPanel;
+	private Dimension defaultDimension = GUI.defaultWindowSize;
 	
-	Font titleFont = new Font( "Helvetica", Font.BOLD, 24 );
+	private Font titleFont = new Font( "Helvetica", Font.BOLD, 24 );
 	
 	public LobbyFrame()
 	{
@@ -34,12 +36,15 @@ public class LobbyFrame extends JFrame
 		Container content = this.getContentPane();
 		content.removeAll();
 		
+		StartButtonListener startButtonListener = new StartButtonListener( this );
 		mainPanel = new JPanel();
 		mainPanel.setLayout( new BorderLayout() );
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout( new GridLayout( 1, 2 ) );
 		LobbyButton joinButton = new LobbyButton( "Join Game" );
+		joinButton.addActionListener( startButtonListener );
 		LobbyButton hostButton = new LobbyButton( "Host Game" );
+		hostButton.addActionListener( startButtonListener );
 		JLabel text = new JLabel( "Join or Host game?", SwingConstants.CENTER );
 		
 		text.setFont( titleFont );
