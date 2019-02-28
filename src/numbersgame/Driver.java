@@ -59,7 +59,10 @@ public class Driver
     public static void main(String[] args)
     {
         //All code so far is done as if there is only 4 players
-        new GUI();
+        GUI gui = new GUI();
+        Game game = new Game();
+        game.setGUI(gui);
+        gui.setGame(game);
         new Numbers();
         new Player();
 

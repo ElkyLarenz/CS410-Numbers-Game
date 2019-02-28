@@ -1,9 +1,12 @@
 package numbersgame;
 
+import numbersgame.gui.GUI;
+
 public class Game {
 	Player[] players = new Player[4];
 	int localPlayPos;
 	int round;
+	GUI gameGUI;
 	
 	public Game()
 	{
@@ -46,5 +49,10 @@ public class Game {
 	public int checkRound()
 	{
 		return round;
+	}
+	
+	public void setGUI(GUI in)
+	{
+		gameGUI = in;
 	}
 }
