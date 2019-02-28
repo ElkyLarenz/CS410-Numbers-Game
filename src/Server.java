@@ -18,7 +18,9 @@ class Server {
         this.serverSocket = new ServerSocket(4444);
         this.ipAddress = Network.findIPaddress();
         this.lobby = new Lobby();
-        new connectClients().start();
+        this.broadcaster = new DatagramSocket(4445);
+        new broadcastIP().start();      // starts broadcasting server IP on port 4446
+        new connectClients().start();   // starts process of allowing clients to connect
     }
 
     // finds the ip address of current device
@@ -26,17 +28,12 @@ class Server {
     String getIpAddress() {
         return ipAddress;
     }
-    
-    public class connectClients extends Thread {
+
+    // Threaded class that allows clients to connect on port 4445
+    private class connectClients extends Thread {
         public void run() {
-            try {
-                broadcaster = new DatagramSocket(4445);
-            } catch (SocketException e) {
-                e.printStackTrace();
-            }
             while(lobby.getState()){
                 Socket clientSocket = null;
-                new broadcastIP().start();
 
                 try {
                     clientSocket = serverSocket.accept();
@@ -48,15 +45,17 @@ class Server {
             }
         }
     }
-    
-    public class broadcastIP extends Thread {
+
+    // Threaded class that broadcasts a datagram packet on port 4446,
+    // for purposes of broadcasting ip address
+    private class broadcastIP extends Thread {
         public void run() {
             while (lobby.getState()) {
-                byte[] buf = new byte[1];
+                byte[] buf = new byte[8];
 
                 InetAddress group = null;
                 try {
-                    group = InetAddress.getByName("203.0.113.0");
+                    group = InetAddress.getByName("224.0.0.0");
                 } catch (UnknownHostException e) {
                     e.printStackTrace();
                 }
@@ -79,7 +78,7 @@ class Server {
     }
 
 
-    public class connection implements Runnable {
+    private class connection implements Runnable {
         Socket clientSocket;
 
         connection(Socket socket) {

@@ -15,7 +15,7 @@ public class Client {
     public Client() throws IOException {
         this.isHost = false;
         this.ipAddress = Network.findIPaddress();
-        findServers();
+        new findServers().start();
     }
 
     public boolean connectSocket(String ip) throws IOException {
@@ -26,7 +26,7 @@ public class Client {
             return false;
         }
 
-        connection();
+        new connection().start();
         return true;
     }
 
@@ -46,32 +46,46 @@ public class Client {
         return ipAddress;
     }
 
-    private void findServers() throws IOException {
-        MulticastSocket listener = new MulticastSocket(4446);
-        InetAddress group = InetAddress.getByName("203.0.113.0");
-        listener.joinGroup(group);
+    private class findServers extends Thread {
+        public void run(){
+            MulticastSocket listener = null;
+            try {
+                listener = new MulticastSocket(4446);
 
-        DatagramPacket packet;
-        for(int i = 0 ; i < 5 ; i++) {
-            byte[] buf = new byte[1];
-            packet = new DatagramPacket(buf, buf.length);
-            listener.receive(packet);
+            InetAddress group = InetAddress.getByName("224.0.0.0");
+            listener.joinGroup(group);
 
-            serverIPs[i] = packet.getAddress().toString();
+            DatagramPacket packet;
+            for(int i = 0 ; i < 5 ; i++) {
+                byte[] buf = new byte[8];
+                packet = new DatagramPacket(buf, buf.length);
+                listener.receive(packet);
+
+                serverIPs[i] = packet.getAddress().toString();
+            }
+
+            listener.leaveGroup(group);
+            socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
-        listener.leaveGroup(group);
-        socket.close();
     }
 
-    private void connection() throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        String inLine;
-        while ((inLine = in.readLine()) != null) {
-            System.out.println(inLine);
-            readServerMessage(inLine);
-        }
 
+    private class connection extends Thread {
+        public void run() {
+            try {
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                String inLine;
+                while ((inLine = in.readLine()) != null) {
+                    System.out.println(inLine);
+                    readServerMessage(inLine);
+                }
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
     }
 
     private void readServerMessage(String inputString){
