@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 
 import numbersgame.Player;
 
+@SuppressWarnings("serial")
 public class LobbyPlayerPanel extends JPanel
 {
 	private Player player;
@@ -35,5 +36,15 @@ public class LobbyPlayerPanel extends JPanel
 		
 		this.add( playerLabel, BorderLayout.NORTH );
 		this.add( nameLabel, BorderLayout.NORTH );
+	}
+	
+	public Player getPlayer()
+	{
+		return player;
+	}
+	
+	public int getPosition()
+	{
+		return position;
 	}
 }

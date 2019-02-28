@@ -30,9 +30,11 @@ public class StartButtonListener implements ActionListener
 			if ( button.getText().equals( "Host Game" ) )
 			{
 				lobbyWindow.getGUI().makeHost();
+				lobbyWindow.showLobbyScreen();
+			} else if ( button.getText().equals( "Join Game" ) )
+			{
+				lobbyWindow.showServerBrowser();
 			}
-		
-			lobbyWindow.showLobbyScreen();
 		}
 	}
 }

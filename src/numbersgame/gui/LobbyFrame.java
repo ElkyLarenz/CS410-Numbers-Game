@@ -14,15 +14,11 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
 import numbersgame.Player;
 
 @SuppressWarnings("serial")
@@ -89,6 +85,37 @@ public class LobbyFrame extends JFrame
 		
 		content.add( mainPanel );
 
+		refresh();
+	}
+	
+	public void showServerBrowser()
+	{
+		Container content = this.getContentPane();
+		content.removeAll();
+		
+		mainPanel = new JPanel();
+		mainPanel.setLayout( new BorderLayout() );
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout( new GridLayout( 1, 2 ) );
+		JLabel label = new JLabel( "Select a server to join" );
+		ServerBrowser browser = new ServerBrowser();
+		ServerBrowserPanel serverBrowserPanel = new ServerBrowserPanel( browser );
+		LobbyButton refreshButton = new LobbyButton( "Refresh List" );
+		LobbyButton joinButton = new LobbyButton( "Join Server" );
+		ServerBrowserButtonListener serverBrowserButtonListener = new ServerBrowserButtonListener( this, serverBrowserPanel );
+		
+		refreshButton.addActionListener( serverBrowserButtonListener );
+		joinButton.addActionListener( serverBrowserButtonListener );
+		
+		buttonPanel.add( refreshButton );
+		buttonPanel.add( joinButton );
+		
+		mainPanel.add( label, BorderLayout.NORTH );
+		mainPanel.add( serverBrowserPanel, BorderLayout.CENTER );
+		mainPanel.add( buttonPanel, BorderLayout.SOUTH );
+		
+		content.add( mainPanel );
+		
 		refresh();
 	}
 	

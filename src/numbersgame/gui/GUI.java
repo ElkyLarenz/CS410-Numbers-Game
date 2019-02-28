@@ -31,6 +31,11 @@ public class GUI
 		this.game = game;
 	}
 	
+	public Game getGame()
+	{
+		return game;
+	}
+	
 	public void setPlayerName( String name )
 	{
 		//game.setName( name );
