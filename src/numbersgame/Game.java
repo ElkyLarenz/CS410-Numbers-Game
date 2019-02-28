@@ -1,5 +1,7 @@
 package numbersgame;
 
+import java.io.IOException;
+
 import numbersgame.gui.GUI;
 
 public class Game {
@@ -7,10 +9,14 @@ public class Game {
 	int localPlayPos;
 	int round;
 	GUI gameGUI;
+	int playerIndex = 0;
+	Client gameClient = null;
 	
-	public Game()
+	
+	public Game() throws IOException
 	{
 		round = 1;
+		gameClient = new Client();
 	}
 	
 	//This will add score from the main player("its the one on this device")
@@ -54,5 +60,17 @@ public class Game {
 	public void setGUI(GUI in)
 	{
 		gameGUI = in;
+	}
+	
+	public void setName(String in)
+	{
+		Client.createPlayer(in);
+	}
+	
+	public void addPlayer(String name)
+	{
+		players[playerIndex].setPlayerName(name);
+		playerIndex++;
+		gameGUI.playerConnected();
 	}
 }
