@@ -5,14 +5,19 @@ import java.io.IOException;
 import numbersgame.gui.GUI;
 
 public class Game {
-	Player[] players = new Player[4];
-	int localPlayPos;
-	int round;
-	GUI gameGUI;
-	int playerIndex = 0;
-	Client gameClient = null;
+	Player[] players = new Player[4]; //this is the array of players
 	
-	
+	int localPlayPos; //this is the position of the local player within the array
+	int round; // this is the round the game is at
+	GUI gameGUI; //this connects the Game class to the gui so they can interact
+	int playerIndex = 0; //this helps add the player in different spots within the array
+	Client gameClient = null; //this creates the client for the player
+	int playerTurn; //this will keep track of whos turn it is
+	String localPlayerName; //this holds the name of the local player
+	/*
+	 * This constructer sets the round to 1
+	 * and creates the client
+	 */
 	public Game() throws IOException
 	{
 		round = 1;
@@ -24,6 +29,7 @@ public class Game {
 	{
 		players[localPlayPos].addScore(in);
 	}
+	
 	/*
 	 * This will get the score from the player
 	 * to display in GUI, it returns an int
@@ -32,6 +38,7 @@ public class Game {
 	{
 		return players[localPlayPos].getScore;
 	}
+	
 	/*
 	 * This will check if the main player, this user 
 	 */
@@ -39,38 +46,90 @@ public class Game {
 	{
 		return players[localPlayPos].setCheck();
 	}
-	/*
-	 * sets the players from lobby
-	 */
-	public void setPlayers(Player[] in)
-	{
-		players = in;
-	}
 	
+	/*
+	 * Changes the round
+	 */
 	public void changeRound()
 	{
 		round++;
 	}
 	
+	/*
+	 * GUI can use this method to pull what round it is
+	 * so it can display it
+	 */
 	public int checkRound()
 	{
 		return round;
 	}
 	
+	
 	public void setGUI(GUI in)
 	{
 		gameGUI = in;
 	}
-	
+	/*
+	 * GUI will use this method to input the name and send it to the client
+	 */
 	public void setName(String in)
 	{
-		Client.createPlayer(in);
+		gameClient.createPlayer(in);
+		localPlayerName = in;
 	}
 	
+	/*
+	 * Server side uses this method to add players as they are connected
+	 */
 	public void addPlayer(String name)
 	{
+		if(localPlayerName.equals(name)) //this tells us what spot the local player is at
+		{
+			localPlayPos = playerIndex;
+		}
 		players[playerIndex].setPlayerName(name);
 		playerIndex++;
 		gameGUI.playerConnected();
 	}
+	
+	/*
+	 * The GUI will use this method to add the number the local player 
+	 * added to their hand
+	 */
+	public void addNumbertoLocal(int in)
+	{
+		players[playerIndex].addNumber(in);
+	}
+	
+	/*
+	 * GUI can use this method to get 
+	 * the array of players
+	 */
+	public Player[] getPlayerArray()
+	{
+		return players;
+	}
+	
+	/*
+	 * GUI uses it to get the client
+	 */
+	public Client getClient()
+	{
+		return gameClient;
+	}
+	
+	public void startRound()
+	{
+		playerTurn = 0;
+		//enable gui of the player whos turn it is
+		
+		
+	}
+	
+	//Server uses to tell whos turn it is
+	public void setPlayerTurn(int in)
+	{
+		playerTurn = in;
+	}
+	
 }
