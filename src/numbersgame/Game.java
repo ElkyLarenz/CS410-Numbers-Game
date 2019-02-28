@@ -22,6 +22,12 @@ public class Game {
 	{
 		round = 1;
 		gameClient = new Client();
+		for(int i = 0; i < 4; i++)
+		{
+			String empty = "";
+			Player temp = new Player(empty, (i+1));
+			players[i] = temp; 
+		}
 	}
 	
 	//This will add score from the main player("its the one on this device")
@@ -82,7 +88,7 @@ public class Game {
 	 * Server side uses this method to add players as they are connected
 	 */
 	public void addPlayer(String name)
-	{
+	{	
 		if(localPlayerName.equals(name)) //this tells us what spot the local player is at
 		{
 			localPlayPos = playerIndex;

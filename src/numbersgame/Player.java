@@ -2,7 +2,8 @@ package numbersgame;
 public class Player
 {
     private String PlayerName;
-
+    private boolean connected = false;
+    private int id;
     Player()
     {
         //default constructor
@@ -15,9 +16,10 @@ public class Player
     }
 
 
-    public Player(String name)
+    public Player(String name, int ID)
     {
         PlayerName = name;
+        id = ID;
     }
 
     public void setPlayerName(String name)
@@ -31,7 +33,21 @@ public class Player
         return PlayerName;
         //returns the name as a string
     }
+    
+    public void setConnection(boolean in)
+    {
+    	connected = in;
+    }
+    
+    public boolean getConnection()
+    {
+    	return connected;
+    }
 
+    public int getID()
+    {
+    	return id;
+    }
 
 
 }
