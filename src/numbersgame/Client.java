@@ -1,4 +1,5 @@
 package numbersgame;
+
 import java.io.*;
 import java.net.*;
 import java.util.Arrays;
@@ -16,12 +17,12 @@ public class Client {
     public Client() throws IOException {
         this.isHost = false;
         this.ipAddress = Network.findIPaddress();
-        new findServers().start();
     }
 
-    public boolean connectSocket(String ip) throws IOException {
+    boolean connectSocket(String ip) throws IOException {
         try {
-            socket = new Socket(ip, 4445);
+            socket = new Socket(ip, 4444);
+            System.out.println("client connected at IP: " + ip);
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -31,42 +32,43 @@ public class Client {
         return true;
     }
 
-    public void becomeHost(){
+    public void becomeHost() {
         this.isHost = true;
     }
 
-    public boolean getHost(){
+    public boolean getHost() {
         return isHost;
     }
 
-    public String[] getServerIPs(){
+    public String[] getServerIPs() {
         return serverIPs;
     }
 
-    String getIpAddress(){
+    String getIpAddress() {
         return ipAddress;
     }
 
-    private class findServers extends Thread {
-        public void run(){
+    class findServers extends Thread {
+        public void run() {
+
             MulticastSocket listener = null;
             try {
                 listener = new MulticastSocket(4446);
+                InetAddress group = InetAddress.getByName("224.0.0.0");
+                listener.joinGroup(group);
+                System.out.println("looking for available servers");
 
-            InetAddress group = InetAddress.getByName("224.0.0.0");
-            listener.joinGroup(group);
+                DatagramPacket packet;
+                for (int i = 0; i < 4; i++) {
+                    byte[] buf = new byte[8];
+                    packet = new DatagramPacket(buf, buf.length);
+                    listener.receive(packet);
 
-            DatagramPacket packet;
-            for(int i = 0 ; i < 5 ; i++) {
-                byte[] buf = new byte[8];
-                packet = new DatagramPacket(buf, buf.length);
-                listener.receive(packet);
+                    serverIPs[i] = packet.getAddress().toString();
+                }
 
-                serverIPs[i] = packet.getAddress().toString();
-            }
-
-            listener.leaveGroup(group);
-            socket.close();
+                listener.leaveGroup(group);
+                socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -78,18 +80,27 @@ public class Client {
         public void run() {
             try {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                System.out.println("connection with server initiated");
                 String inLine;
                 while ((inLine = in.readLine()) != null) {
                     System.out.println(inLine);
                     readServerMessage(inLine);
                 }
-            } catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void readServerMessage(String inputString){
+    void createPlayer(String name) throws IOException {
+        OutputStream outstream = socket.getOutputStream();
+        PrintWriter out = new PrintWriter(outstream);
+
+        out.print("NAME");
+        out.print(name);
+    }
+
+    private void readServerMessage(String inputString) {
         ListIterator<String> in;
         List<String> inputList = Arrays.asList(inputString.split(","));
         in = inputList.listIterator();

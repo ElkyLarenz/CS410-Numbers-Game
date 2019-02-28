@@ -9,13 +9,10 @@ public class networkTests {
         Client client = new Client();
         Server server = new Server();
 
-        String ip = "192.168.0.14";
+        client.connectSocket(server.getIpAddress());
 
-        System.out.println(testIPaddress(ip, server));
-    }
-
-    private static boolean testIPaddress(String ip, Server server) throws IOException {
-        return assertEquals(ip, server.getIpAddress());
+        System.out.println(server.getIpAddress());
+        System.out.println(client.getIpAddress());
     }
 
     private static boolean assertEquals(String one, String two){
