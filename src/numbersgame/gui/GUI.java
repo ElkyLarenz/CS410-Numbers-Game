@@ -1,9 +1,9 @@
 
-package gui;
+package numbersgame.gui;
 
 public class GUI
 {
-	LobbyFrame lobbyWindow;
+	private LobbyFrame lobbyWindow;
 	public GUI()
 	{
 		// Want to show this screen when the program first starts

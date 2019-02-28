@@ -1,5 +1,5 @@
 
-package gui;
+package numbersgame.gui;
 
 import javax.swing.JFrame;
 

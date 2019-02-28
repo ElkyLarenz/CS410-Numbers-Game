@@ -1,5 +1,5 @@
 
-package gui;
+package numbersgame.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;

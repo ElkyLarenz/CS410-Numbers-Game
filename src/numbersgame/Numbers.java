@@ -1,3 +1,4 @@
+package numbersgame;
 public class Numbers
 {
     //Numbers can only be chosen from 1 - 20

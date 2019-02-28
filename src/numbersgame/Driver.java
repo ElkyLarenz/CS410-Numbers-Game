@@ -1,3 +1,4 @@
+package numbersgame;
 /*
     Numbers Game Program
     CS-410 Software Engineering: Iyengar
@@ -49,7 +50,8 @@ Output:
 
 
 import java.util.*;
-import gui.GUI;
+
+import numbersgame.gui.GUI;
 
 public class Driver
 {

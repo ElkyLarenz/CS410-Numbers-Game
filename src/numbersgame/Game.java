@@ -1,3 +1,4 @@
+package numbersgame;
 
 public class Game {
 	Player main;

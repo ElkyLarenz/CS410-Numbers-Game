@@ -1,3 +1,4 @@
+package numbersgame;
 import java.util.ArrayList;
 
 class Lobby {
