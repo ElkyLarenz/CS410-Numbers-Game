@@ -2,13 +2,20 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static junit.framework.TestCase.assertEquals;
 
 public class networkTests {
-    @Test
-    public void testIPaddress() throws IOException {
+    public static void main(String[] args) throws IOException {
         String ip = "192.168.0.14";
+
+        System.out.println(testIPaddress(ip));
+    }
+
+    private static boolean testIPaddress(String ip) throws IOException {
         Server server = new Server();
-        assertEquals(ip, server.getIpAddress());
+        return assertEquals(ip, server.getIpAddress());
+    }
+
+    private static boolean assertEquals(String one, String two){
+        return one.equals(two);
     }
 }

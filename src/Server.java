@@ -18,7 +18,7 @@ class Server {
         this.serverSocket = new ServerSocket(4444);
         this.ipAddress = Network.findIPaddress();
         this.lobby = new Lobby();
-        connectClients();
+        new connectClients().start();
     }
 
     // finds the ip address of current device
@@ -26,19 +26,29 @@ class Server {
     String getIpAddress() {
         return ipAddress;
     }
+    
+    public class connectClients extends Thread {
+        public void run() {
+            try {
+                broadcaster = new DatagramSocket(4445);
+            } catch (SocketException e) {
+                e.printStackTrace();
+            }
+            while(lobby.getState()){
+                Socket clientSocket = null;
+                new broadcastIP().start();
 
-    private void connectClients() throws IOException {
-        broadcaster = new DatagramSocket(4445);
-        while (lobby.getState()) {
-            Socket clientSocket;
-            new broadcastIP().start();
+                try {
+                    clientSocket = serverSocket.accept();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-            clientSocket = serverSocket.accept();
-
-            new Thread(new connection(clientSocket)).start();
+                new Thread(new connection(clientSocket)).start();
+            }
         }
     }
-
+    
     public class broadcastIP extends Thread {
         public void run() {
             while (lobby.getState()) {
@@ -63,7 +73,6 @@ class Server {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
             }
             broadcaster.close();
         }
@@ -104,7 +113,6 @@ class Server {
                     lobby.addPlayer(new Player(in.next()));
                     break;
             }
-
         }
     }
 }
