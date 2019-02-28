@@ -59,36 +59,18 @@ public class Driver
     public static void main(String[] args)
     {
         //All code so far is done as if there is only 4 players
-        new GUI();
+    	
+        GUI gui = new GUI();
+        Game game = new Game();
+        game.setGUI(gui);
+        gui.setGame(game);
         new Numbers();
         new Player();
 
 
-        /*for(int i = 0; i <= 3; i++)
-        {
-            //Creates each player
-            new Player().setPlayerName("Player " + i);
-            //Reminder: give the player the option to customize their name later
-            System.out.println();
-        }*/
-        Player player1 = new Player();
-        Player player2 = new Player();
-        Player player3 = new Player();
-        Player player4 = new Player();
-
-        for(int i = 0; i <= 3; i++)
-        {
-            //Creates each player's hand
-            LinkedList<PlayerHand> hand = new LinkedList<PlayerHand>();
-        }
-
-        //random number generator
-        Random rand = new Random();
-
-        int n = rand.nextInt(20) + 1;
-        //20 is the maximum and the 1 is our minimum.
 
 
+ 
 
     }
 

@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 class Server {
     private ServerSocket serverSocket;
-    Socket[] clientSockets;
     private String ipAddress;
     private Lobby lobby;
     private DatagramSocket broadcaster;
@@ -19,7 +18,7 @@ class Server {
         this.serverSocket = new ServerSocket(4444);
         this.ipAddress = Network.findIPaddress();
         this.lobby = new Lobby();
-        this.broadcaster = new DatagramSocket(4445);
+        this.broadcaster = new DatagramSocket(4446);
         new broadcastIP().start();      // starts broadcasting server IP on port 4446
         new connectClients().start();   // starts process of allowing clients to connect
     }

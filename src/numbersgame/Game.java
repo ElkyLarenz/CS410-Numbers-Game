@@ -1,17 +1,28 @@
 package numbersgame;
 
+import java.io.IOException;
+
+import numbersgame.gui.GUI;
+
 public class Game {
-	Player main;
+	Player[] players = new Player[4];
+	int localPlayPos;
+	int round;
+	GUI gameGUI;
+	int playerIndex = 0;
+	Client gameClient = null;
 	
-	public Game()
+	
+	public Game() throws IOException
 	{
-		main = new Player();
+		round = 1;
+		gameClient = new Client();
 	}
 	
 	//This will add score from the main player("its the one on this device")
 	public void addScore(int in)
 	{
-		main.addScore(in);
+		players[localPlayPos].addScore(in);
 	}
 	/*
 	 * This will get the score from the player
@@ -19,13 +30,47 @@ public class Game {
 	 */
 	public int getScore()
 	{
-		return main.getScore;
+		return players[localPlayPos].getScore;
 	}
 	/*
 	 * This will check if the main player, this user 
 	 */
 	public boolean SuperSetCheck()
 	{
-		return main.setCheck();
+		return players[localPlayPos].setCheck();
+	}
+	/*
+	 * sets the players from lobby
+	 */
+	public void setPlayers(Player[] in)
+	{
+		players = in;
+	}
+	
+	public void changeRound()
+	{
+		round++;
+	}
+	
+	public int checkRound()
+	{
+		return round;
+	}
+	
+	public void setGUI(GUI in)
+	{
+		gameGUI = in;
+	}
+	
+	public void setName(String in)
+	{
+		Client.createPlayer(in);
+	}
+	
+	public void addPlayer(String name)
+	{
+		players[playerIndex].setPlayerName(name);
+		playerIndex++;
+		gameGUI.playerConnected();
 	}
 }
