@@ -75,6 +75,15 @@ public class Player
         return rand;
     }
 
+    public int[] randomHand()
+    {
+        for(int i = 0; i <= hand.length; i++)
+        {
+            hand[i] = randomNum();
+        }
+        return hand;
+    }
+
     public boolean setCheck()
     {
         return false;
