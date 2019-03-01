@@ -24,6 +24,7 @@ public class Game {
 	 */
 	public Game() throws IOException
 	{
+		playerTurn = 0;
 		round = 1;
 		
 		for(int i = 0; i < 4; i++)
@@ -222,6 +223,12 @@ public class Game {
 	public void addNumbertoLocal(int in)
 	{
 		players[localPlayPos].addNumber(in);
+		//method to send to server so server can up date hand
+	}
+	
+	public void addNumberToPlayer(int pos, int num)
+	{
+		players[pos].addNumber(num);
 	}
 	
 	/*
@@ -243,9 +250,13 @@ public class Game {
 	
 	public void startRound()
 	{
-		playerTurn = 0;
+		
 		//enable gui of the player whos turn it is
-		this.checkIfLocalTurn();
+		if(this.checkIfLocalTurn() == true)
+		{
+			
+		}
+			
 		
 		
 	}
