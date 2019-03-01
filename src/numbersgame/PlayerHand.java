@@ -20,9 +20,9 @@ public class PlayerHand
 
     }
     //create an array index of the numbers in player hand, say how many are field
-    public int[] sendHand()
+    public static int[] sendHand(int[] hand)
     {
-        getHand();
+
         int count = 0;
 
         for(int i = 0; i <= hand.length; i++)

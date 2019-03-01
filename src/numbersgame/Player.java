@@ -2,12 +2,13 @@ package numbersgame;
 
 public class Player
 {
-
     private String PlayerName;
     public int PlayerScore;
     public int Won;
     private boolean connected = false;
     private int id;
+    public int[] hand;
+
     Player()
     {
         //default constructor
@@ -53,7 +54,7 @@ public class Player
     {
     	return id;
     }
-    public int addNumber(int[]hand, int num)
+    public void addNumber(int num)
     {
         //adds number from gui into player hand
 
@@ -63,7 +64,7 @@ public class Player
             hand[i] = AddedNum;
             AddedNum += num;
         }
-        return AddedNum;
+
 
     }
     public void randomNum()
@@ -99,9 +100,9 @@ public class Player
 
     }
 
-    public void getHandNumbers(int[] arr)
+    public int[] getHandNumbers(int[] arr)
     {
-
+        return arr;
     }
 }
 
