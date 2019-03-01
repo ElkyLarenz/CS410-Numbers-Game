@@ -90,12 +90,12 @@ public class Player
     public int AddtoWon() {
         return Won++;
     }
-    public void addScore(int in, int cards)
+    public void addScore(int in, int num)
     {
         //the score added is the number of cards in hand
 
 
-        in = in + cards;
+        in = in + num;
 
     }
 }
