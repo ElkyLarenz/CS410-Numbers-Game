@@ -30,6 +30,11 @@ public class Game {
 		}
 	}
 	
+	public String localPlayerName()
+	{
+		return localPlayerName;
+	}
+	
 	//This will add score from the main player("its the one on this device")
 	public void addScore(int in)
 	{
@@ -78,7 +83,7 @@ public class Game {
 	/*
 	 * GUI will use this method to input the name and send it to the client
 	 */
-	public void setName(String in)
+	public void setName(String in) throws IOException
 	{
 		gameClient.createPlayer(in);
 		localPlayerName = in;
@@ -94,8 +99,13 @@ public class Game {
 			localPlayPos = playerIndex;
 		}
 		players[playerIndex].setPlayerName(name);
-		playerIndex++;
+		
 		gameGUI.playerConnected();
+	
+			
+		playerIndex++;
+		if(playerIndex == 5)
+			this.startRound();
 	}
 	
 	/*
