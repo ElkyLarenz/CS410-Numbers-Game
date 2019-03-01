@@ -14,7 +14,7 @@ public class Game {
 	Client gameClient = null; //this creates the client for the player
 	int playerTurn; //this will keep track of whos turn it is
 	String localPlayerName; //this holds the name of the local player
-	Server hostServer;
+	Server hostServer; //its the host object for the host
 	/*
 	 * This constructer sets the round to 1
 	 * and creates the client
@@ -58,7 +58,7 @@ public class Game {
 	//This will add score from the main player("its the one on this device")
 	public void addScore(int in)
 	{
-		players[localPlayPos].addScore(in);
+	//	players[localPlayPos].addScore(in);
 	}
 	
 	/*
@@ -67,7 +67,7 @@ public class Game {
 	 */
 	public int getScore()
 	{
-		return players[localPlayPos].getScore;
+//		return players[localPlayPos].getScore;
 	}
 	
 	/*
@@ -75,7 +75,7 @@ public class Game {
 	 */
 	public boolean SuperSetCheck()
 	{
-		return players[localPlayPos].setCheck();
+	// players[localPlayPos].setCheck();
 	}
 	
 	/*
