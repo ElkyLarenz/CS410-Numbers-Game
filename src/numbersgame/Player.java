@@ -2,13 +2,11 @@ package numbersgame;
 public class Player
 {
     private String PlayerName;
-    public int PlayerScore;
-    public int Won;
-
-
+    private boolean connected = false;
+    private int id;
     Player()
     {
-        Object PlayerHand = new PlayerHand();
+        //default constructor
 
     }
     @Override
@@ -18,9 +16,10 @@ public class Player
     }
 
 
-    public Player(String name)
+    public Player(String name, int ID)
     {
         PlayerName = name;
+        id = ID;
     }
 
     public void setPlayerName(String name)
@@ -34,41 +33,21 @@ public class Player
         return PlayerName;
         //returns the name as a string
     }
-    public void playerScore()
+    
+    public void setConnection(boolean in)
     {
-        int Score = 0;
-
+    	connected = in;
     }
-    public void addScore(int in, int cards)
+    
+    public boolean getConnection()
     {
-        //the score added is the number of cards in hand
-
-
-        in = in + cards;
-
+    	return connected;
     }
 
-    public int getScore()
+    public int getID()
     {
-        return PlayerScore;
-
+    	return id;
     }
-    public int GetWon()
-    {
-        return Won;
-    }
-    public int AddtoWon()
-    {
-        return Won++;
-    }
-
-    public void setCheck()
-    {
-
-
-    }
-
-
 
 
 }
