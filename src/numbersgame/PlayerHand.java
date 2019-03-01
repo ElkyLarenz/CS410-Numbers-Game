@@ -12,12 +12,36 @@ public class PlayerHand
         //default constructor
         //this is here just to set the numbers in hand to to be in the range
         //from 1 to 20
-        for(int i = 0; i < hand.length; i++){
-            hand[i] = i + 1; // +1 since we want 1-20
+        int[]  hand  = new int[20];
+        for(int i = 0; i < hand.length; i++)
+        {
+            hand[i] = Integer.parseInt(null);
         }
 
-
     }
+    //create an array index of the numbers in player hand, say how many are field
+    public int[] sendHand()
+    {
+        getHand();
+        int count = 0;
+
+        for(int i = 0; i <= hand.length; i++)
+        {
+            if((Object)hand[i] != null)
+            {
+                count++;
+            }
+        }
+        int[]  exactNums  = new int[count];
+        for(int i = 0; i <= exactNums.length; i++)
+        {
+            exactNums[i] = hand[i];
+        }
+
+        return exactNums;
+    }
+
+
 
     public void setHand(int[] hand) {
         this.hand = hand;

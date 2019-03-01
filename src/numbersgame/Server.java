@@ -38,7 +38,6 @@ class Server {
             System.out.println("Broadcasting server IP");
             while (lobby.getState()) {
                 byte[] buf;
-
                 InetAddress group = null;
                 try {
                     group = InetAddress.getByName("230.0.0.0");
@@ -57,7 +56,7 @@ class Server {
                 }
 
                 try {
-                    TimeUnit.MILLISECONDS.sleep(1);
+                    TimeUnit.MILLISECONDS.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -134,6 +133,7 @@ class Server {
         ListIterator<String> in;
         List<String> inputList = Arrays.asList(inputString.split(","));
         in = inputList.listIterator();
+        System.out.println(in.toString());
 
         while (in.hasNext()) {
             switch (in.next()) {

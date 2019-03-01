@@ -1,10 +1,7 @@
 package numbersgame;
 
 import java.io.*;
-import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
-import java.net.Socket;
+import java.net.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
@@ -28,7 +25,7 @@ public class Client {
         }
     }
 
-    boolean connectSocket(String ip) throws IOException {
+    public boolean connectSocket(String ip) throws IOException {
         try {
             socket = new Socket(ip, 3333);
             System.out.println("client connected at IP: " + ip);
@@ -67,6 +64,7 @@ public class Client {
             listener = new MulticastSocket(4445);
             listener.setSoTimeout(1000);
             InetAddress group = InetAddress.getByName("230.0.0.0");
+
             listener.joinGroup(group);
             System.out.println("looking for available servers");
 
@@ -110,7 +108,7 @@ public class Client {
     }
 
     // send player name to server to create player
-    void createPlayer(String name) throws IOException {
+    public void createPlayer(String name) throws IOException {
         OutputStream outstream = socket.getOutputStream();
         PrintWriter out = new PrintWriter(outstream);
 

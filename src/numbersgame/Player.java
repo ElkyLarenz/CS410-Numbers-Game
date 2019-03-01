@@ -98,5 +98,10 @@ public class Player
         in = in + num;
 
     }
+
+    public void getHandNumbers(int[] arr)
+    {
+
+    }
 }
 
