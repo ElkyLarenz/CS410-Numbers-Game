@@ -15,6 +15,7 @@ public class Game {
 	int playerTurn; //this will keep track of whos turn it is
 	String localPlayerName; //this holds the name of the local player
 	Server hostServer; //its the host object for the host
+	boolean[][] superSets = new boolean[4][4]; //keeps track of all supersets
 	/*
 	 * This constructer sets the round to 1
 	 * and creates the client
@@ -31,6 +32,20 @@ public class Game {
 		}
 	}
 
+	public void setupSuperSet()
+	{
+		for(int i= 0; i < 4; i++)
+		{
+			for(int j = 0; j < 4; j++)
+			{
+				if(j == i)
+					superSets[i][j] = true;
+				else
+					superSets[i][j] = false;
+			}
+		}
+	}
+	
 	public void createClient(boolean in) throws IOException
 	{
 		if(in == true)
@@ -71,16 +86,47 @@ public class Game {
 
 	{
 		return players[localPlayPos].getScore();
->
+
 	}
 	
 	/*
 	 * This will check if the main player, this user 
 	 */
-	public boolean SuperSetCheck()
+	
+	public void SuperSetCheck()
 	{
 	// players[localPlayPos].setCheck();
+		int[] localHand = players[localPlayPos].getHandNumbers();
+		
+		for(int i = 0; i < 4; i++)
+		{
+			if(i != localPlayPos)
+			{
+				int[] checkingHand = players[i].getHandNumbers();
+				boolean allSame = true;
+				for(int j = 0; j < localHand.length; j++)
+				{
+					for(int k= 0; k < checkingHand.length; k++)
+					{
+						if(localHand[j] != checkingHand[k])
+						{
+							allSame = false;
+						}
+							
+					}
+					
+				}
+				if(allSame == true)
+				{
+					superSets[localPlayPos][i] = true;
+				}
+				
+			}
+		}
 	}
+	
+	
+	
 	
 	/*
 	 * Changes the round
