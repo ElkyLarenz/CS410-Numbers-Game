@@ -102,7 +102,7 @@ public class LobbyFrame extends JFrame
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout( new GridLayout( 1, 2 ) );
 		JLabel label = new JLabel( "Select a server to join" );
-		ServerBrowser browser = new ServerBrowser();
+		ServerBrowser browser = new ServerBrowser( gui.getClient() );
 		ServerBrowserPanel serverBrowserPanel = new ServerBrowserPanel( browser );
 		LobbyButton refreshButton = new LobbyButton( "Refresh List" );
 		LobbyButton joinButton = new LobbyButton( "Join Server" );

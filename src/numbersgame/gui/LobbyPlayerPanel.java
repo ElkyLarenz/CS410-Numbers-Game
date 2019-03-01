@@ -22,6 +22,9 @@ public class LobbyPlayerPanel extends JPanel
 {
 	private Player player;
 	private int position = 0;
+	private JLabel playerLabel;
+	private JLabel nameLabel;
+	private JLabel connectedLabel;
 	
 	public LobbyPlayerPanel( Player player, int position )
 	{
@@ -30,14 +33,34 @@ public class LobbyPlayerPanel extends JPanel
 		
 		this.setLayout( new BorderLayout() );
 		
-		JLabel playerLabel = new JLabel( position + ". Player " + player.getID() );
+		playerLabel = new JLabel( position + ". Player " + player.getID() );
+		
 		if ( player.getID() == 1 )
 			playerLabel.setText( playerLabel.getText() + " (host)" );
-		JLabel nameLabel = new JLabel( player.getPlayerName() );
-		JLabel connectedLabel = new JLabel( "Not connected" );
+		
+		nameLabel = new JLabel( player.getPlayerName() );
+		connectedLabel = new JLabel( "Not connected" );
 		connectedLabel.setForeground( Color.red );
 		
 		this.setBorder( BorderFactory.createLineBorder( Color.BLACK ) );
+		
+		playerLabel.setFont( LobbyFrame.titleFont );
+		
+		this.add( playerLabel, BorderLayout.NORTH );
+		this.add( nameLabel, BorderLayout.CENTER );
+		this.add( connectedLabel, BorderLayout.SOUTH );
+		
+		updatePlayerInformation();
+	}
+	
+	public void updatePlayerInformation()
+	{
+		playerLabel.setText( position + ". Player " + player.getID() );
+		
+		if ( player.getID() == 1 )
+			playerLabel.setText( playerLabel.getText() + " (host)" );
+		
+		nameLabel.setText( player.getPlayerName() );
 		
 		if ( player.getConnection() )
 		{
@@ -45,11 +68,7 @@ public class LobbyPlayerPanel extends JPanel
 			connectedLabel.setForeground( Color.green );
 		}
 		
-		playerLabel.setFont( LobbyFrame.titleFont );
-		
-		this.add( playerLabel, BorderLayout.NORTH );
-		this.add( nameLabel, BorderLayout.CENTER );
-		this.add( connectedLabel, BorderLayout.SOUTH );
+		refresh();
 	}
 	
 	public Player getPlayer()
