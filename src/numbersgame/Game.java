@@ -37,6 +37,7 @@ public class Game {
 		{
 
 			players[0].setPlayerName(localPlayerName);
+			players[0].setConnection(true);
 			hostServer = new Server(players[0], this);
 			gameClient = new Client(true);
 			
