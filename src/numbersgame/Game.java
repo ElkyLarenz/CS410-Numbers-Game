@@ -59,7 +59,6 @@ public class Game {
 	public void addScore(int in, int cards)
 	{
 
-		players[localPlayPos].addScore(in);
 		players[localPlayPos].addScore(in, cards);
 
 	}
@@ -69,10 +68,10 @@ public class Game {
 	 * to display in GUI, it returns an int
 	 */
 	public int getScore()
-	{		return players[localPlayPos].getScore;
 
+	{
 		return players[localPlayPos].getScore();
-
+>
 	}
 	
 	/*
