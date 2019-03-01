@@ -1,6 +1,7 @@
 package numbersgame;
 
 import java.io.IOException;
+import java.util.Random;
 
 import numbersgame.gui.GUI;
 
@@ -16,6 +17,7 @@ public class Game {
 	String localPlayerName; //this holds the name of the local player
 	Server hostServer; //its the host object for the host
 	boolean[][] superSets = new boolean[4][4]; //keeps track of all supersets
+
 	/*
 	 * This constructer sets the round to 1
 	 * and creates the client
@@ -192,6 +194,7 @@ public class Game {
 			if(name[i] != null)
 			{
 				players[i].setPlayerName(name[i]);
+				players[i].setConnection(true);
 				if(name[i].equals(localPlayerName))
 					localPlayPos = i;
 				
@@ -242,6 +245,7 @@ public class Game {
 	{
 		playerTurn = 0;
 		//enable gui of the player whos turn it is
+		this.checkIfLocalTurn();
 		
 		
 	}
@@ -291,5 +295,11 @@ public class Game {
 			players[i+1] = players[i];
 		}
 		players[0] = temp;
+		
+		if(localPlayPos == 3)
+			localPlayPos =0;
+		else
+			localPlayPos++;
+		
 	}
 }
