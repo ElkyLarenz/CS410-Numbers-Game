@@ -100,8 +100,9 @@ public class Player
 
     }
 
-    public int[] getHandNumbers(int[] arr)
+    public int[] getHandNumbers()
     {
+        int[] arr = hand;
         return arr;
     }
 }
