@@ -16,17 +16,23 @@ import numbersgame.Client;
 public class GUI
 {
 	private LobbyFrame lobbyWindow;
+	private GameFrame gameWindow;
 	public static Dimension defaultWindowSize = new Dimension( 1024, 768 );
 	private Game game;
 	private Client client;
 	private boolean isHost;
+	private boolean gameInProgress;
 	
 	public GUI()
 	{
 		// Want to show this screen when the program first starts
 		isHost = false;
-		lobbyWindow = new LobbyFrame( this );
-		lobbyWindow.setVisible( true );
+		gameInProgress = true;
+//		lobbyWindow = new LobbyFrame( this );
+//		lobbyWindow.setVisible( true );
+		
+		gameWindow = new GameFrame( this );
+		gameWindow.setVisible( true );
 	}
 	
 	public void setGame( Game game )
@@ -52,6 +58,14 @@ public class GUI
 	public void playerConnected()
 	{
 		
+	}
+	
+	public void updateGameBoard()
+	{
+		if ( gameInProgress )
+		{
+			gameWindow.updateBoardData();
+		}
 	}
 	
 	public void start( boolean isHost )

@@ -27,11 +27,13 @@ public class LobbyFrame extends JFrame
 	private JPanel mainPanel;
 	private Dimension defaultDimension = GUI.defaultWindowSize;
 	private GUI gui;
+	private boolean inLobby;
 	
 	public static Font titleFont = new Font( "Helvetica", Font.BOLD, 24 );
 	
 	public LobbyFrame( GUI gui )
 	{
+		inLobby = false;
 		this.gui = gui;
 		this.setTitle( "Game Lobby" );
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
@@ -67,15 +69,17 @@ public class LobbyFrame extends JFrame
 		content.add( mainPanel );
 	}
 	
+	LobbyPlayerPanel[] playerPanels = new LobbyPlayerPanel[ 4 ];
 	// The lobby screen is used before the game and between rounds.
 	// It displays information about the other players.
 	public void showLobbyScreen()
 	{
+		inLobby = true;
 		Container content = this.getContentPane();
 		content.removeAll();
 		
 		mainPanel = new JPanel();
-		LobbyPlayerPanel[] playerPanels = new LobbyPlayerPanel[ 4 ];
+//		LobbyPlayerPanel[] playerPanels = new LobbyPlayerPanel[ 4 ];
 		Player[] players = gui.getGame().getPlayerArray();
 		
 		mainPanel.setLayout( new GridLayout( 2, 2 ) );
@@ -90,6 +94,17 @@ public class LobbyFrame extends JFrame
 		content.add( mainPanel );
 
 		refresh();
+	}
+	
+	public void updateLobby()
+	{
+		if ( inLobby() )
+		{
+			for ( int i = 0; i < playerPanels.length; i++ )
+			{
+				playerPanels[ i ].updatePlayerInformation();
+			}
+		}
 	}
 	
 	public void showServerBrowser()
@@ -135,6 +150,11 @@ public class LobbyFrame extends JFrame
 	public GUI getGUI()
 	{
 		return gui;
+	}
+	
+	public boolean inLobby()
+	{
+		return inLobby;
 	}
 	
 	public void refresh()
