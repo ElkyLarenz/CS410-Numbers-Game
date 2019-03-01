@@ -56,12 +56,11 @@ public class Driver
     public static void main(String[] args)
     {
         //All code so far is done as if there is only 4 players
-        GUI gui = new GUI();
         Game game;
 		try {
 			game = new Game();
+			GUI gui = new GUI( game );
 			game.setGUI( gui );
-			gui.setGame( game );
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

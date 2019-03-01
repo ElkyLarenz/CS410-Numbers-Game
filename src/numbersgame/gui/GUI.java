@@ -23,21 +23,25 @@ public class GUI
 	private boolean isHost;
 	private boolean gameInProgress;
 	
-	public GUI()
-	{
-		// Want to show this screen when the program first starts
-		isHost = false;
-		gameInProgress = true;
-//		lobbyWindow = new LobbyFrame( this );
-//		lobbyWindow.setVisible( true );
-		
-		gameWindow = new GameFrame( this );
-		gameWindow.setVisible( true );
-	}
-	
-	public void setGame( Game game )
+	public GUI( Game game )
 	{
 		this.game = game;
+		// Want to show this screen when the program first starts
+		isHost = false;
+		gameInProgress = false;
+		lobbyWindow = new LobbyFrame( this );
+		lobbyWindow.showLobbyScreen();
+		lobbyWindow.setVisible( true );
+//		lobbyWindow.displayNameInput(); // Bypass the lobby screen for now.
+		
+	}
+	
+	public void startGame()
+	{
+		gameInProgress = true;
+		gameWindow = new GameFrame( this );
+		lobbyWindow.setVisible( false );
+		gameWindow.setVisible( true );
 	}
 	
 	public Game getGame()
@@ -57,7 +61,7 @@ public class GUI
 	
 	public void playerConnected()
 	{
-		
+		lobbyWindow.updateLobby();
 	}
 	
 	public void updateGameBoard()
