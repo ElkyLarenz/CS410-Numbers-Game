@@ -27,7 +27,7 @@ class Client {
 
     boolean connectSocket(String ip) throws IOException {
         try {
-            socket = new Socket(ip, 4444);
+            socket = new Socket(ip, 3333);
             System.out.println("client connected at IP: " + ip);
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,7 +57,7 @@ class Client {
     void findServers(){
         MulticastSocket listener = null;
         try {
-            listener = new MulticastSocket(4446);
+            listener = new MulticastSocket(4445);
             InetAddress group = InetAddress.getByName("224.0.0.0");
             listener.joinGroup(group);
             System.out.println("looking for available servers");
@@ -93,6 +93,7 @@ class Client {
             }
         }
     }
+
 
     void createPlayer(String name) throws IOException {
         OutputStream outstream = socket.getOutputStream();

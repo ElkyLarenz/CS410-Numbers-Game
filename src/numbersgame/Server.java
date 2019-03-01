@@ -20,9 +20,10 @@ class Server {
         this.ipAddress = Network.findIPaddress();
         this.lobby = new Lobby();
         this.hostName = host.getPlayerName();
+        this.broadcaster = new DatagramSocket(4445);
 
         new broadcastIP().start();
-        startServer();
+        new startServer().start();
     }
 
     String getIpAddress() {
@@ -33,6 +34,7 @@ class Server {
     // address 224.0.0.0, port 4446
     private class broadcastIP extends Thread {
         public void run() {
+            System.out.println("Broadcasting server IP");
             while (lobby.getState()) {
                 byte[] buf;
 
@@ -64,30 +66,36 @@ class Server {
     }
 
     // start server, connect clients to client handler
-    private void startServer() throws IOException {
-        while (true) {
-            Socket s = null;
+    class startServer extends Thread {
+        @Override
+        public void run(){
+            while (true) {
+                Socket s = null;
 
-            try {
-                s = ss.accept();
-                System.out.println("A new client has connected : " + s);
+                try {
+                    s = ss.accept();
+                    System.out.println("A new client has connected : " + s);
 
-                DataInputStream dis = new DataInputStream(s.getInputStream());
-                DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+                    DataInputStream dis = new DataInputStream(s.getInputStream());
+                    DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 
-                System.out.println("create new thread for client");
+                    System.out.println("create new thread for client");
 
-                // create new thread
-                Thread t = new ClientHandler(s, dis, dos);
+                    // create new thread
+                    Thread t = new ClientHandler(s, dis, dos);
 
-                t.start();
+                    t.start();
 
-            } catch (Exception e) {
-                assert s != null;
-                s.close();
-                e.printStackTrace();
+                } catch (Exception e) {
+                    assert s != null;
+                    try {
+                        s.close();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                    e.printStackTrace();
+                }
             }
-
         }
     }
 
