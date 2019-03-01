@@ -46,6 +46,11 @@ public class Game {
 		}
 	}
 	
+	public Player getLocalPlayerObject()
+	{
+		return players[localPlayPos];
+	}
+	
 	public void createClient(boolean in) throws IOException
 	{
 		if(in == true)
@@ -97,7 +102,7 @@ public class Game {
 	{
 	// players[localPlayPos].setCheck();
 		int[] localHand = players[localPlayPos].getHandNumbers();
-		
+		boolean overallSuperSet = false; // this will tell me if overall there was at least one superset
 		for(int i = 0; i < 4; i++)
 		{
 			if(i != localPlayPos)
@@ -119,9 +124,15 @@ public class Game {
 				if(allSame == true)
 				{
 					superSets[localPlayPos][i] = true;
+					overallSuperSet = true;
 				}
 				
 			}
+		}
+		
+		if(overallSuperSet = true)
+		{
+			this.send2DArraytoGUI();
 		}
 	}
 	
@@ -135,6 +146,10 @@ public class Game {
 		return superSets;
 	}
 	
+	public void send2DArraytoGUI()
+	{
+		gameGUI.updateGameBoard();;
+	}
 	
 	/*
 	 * Changes the round
@@ -170,14 +185,25 @@ public class Game {
 	/*
 	 * Server side uses this method to add players as they are connected
 	 */
-	public void addPlayer(String name)
+	public void addPlayer(String[] name)
 	{	
+		for(int i = 0; i < 4; i++)
+		{
+			if(name[i] != null)
+			{
+				players[i].setPlayerName(name[i]);
+				if(name[i].equals(localPlayerName))
+					localPlayPos = i;
+				
+			}
+		}
+		/*
 		if(localPlayerName.equals(name)) //this tells us what spot the local player is at
 		{
 			localPlayPos = playerIndex;
 		}
 		players[playerIndex].setPlayerName(name);
-		
+		*/
 		gameGUI.playerConnected();
 	
 			
@@ -232,6 +258,17 @@ public class Game {
 		{
 			return false;
 		}
+	}
+	
+	public boolean checkIfLocalHasAllSuperSet()
+	{
+		boolean back = true;
+		for(int i = 0; i < 4; i++)
+		{
+			if(superSets[localPlayPos][i] == false)
+				back = false;
+		}
+		return back;
 	}
 	
 	public void tellGuiItsLocalTurn()
