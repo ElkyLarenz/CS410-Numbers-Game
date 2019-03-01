@@ -48,7 +48,7 @@ class Server {
                 DatagramPacket packet;
 
                 buf = hostName.getBytes();
-                packet = new DatagramPacket(buf, buf.length, group, 4446);
+                packet = new DatagramPacket(buf, buf.length, group, 4445);
 
                 try {
                     broadcaster.send(packet);
@@ -57,7 +57,7 @@ class Server {
                 }
 
                 try {
-                    TimeUnit.SECONDS.sleep(5);
+                    TimeUnit.MILLISECONDS.sleep(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

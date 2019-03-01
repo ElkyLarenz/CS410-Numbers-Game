@@ -65,7 +65,7 @@ public class Client {
         MulticastSocket listener = null;
         try {
             listener = new MulticastSocket(4445);
-            listener.setSoTimeout(100);
+            listener.setSoTimeout(1000);
             InetAddress group = InetAddress.getByName("224.0.0.0");
             listener.joinGroup(group);
             System.out.println("looking for available servers");
