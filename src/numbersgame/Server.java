@@ -13,7 +13,7 @@ class Server {
     private String ipAddress;
     private DatagramSocket broadcaster;
     private String hostName;
-
+    private Game game;
 
     Server(Player host, Game game) throws IOException {
         this.ss = new ServerSocket(3333);
@@ -21,6 +21,7 @@ class Server {
         this.lobby = new Lobby();
         this.hostName = host.getPlayerName();
         this.broadcaster = new DatagramSocket(4445);
+        this.game = game;
 
         new broadcastIP().start();
         new startServer().start();
@@ -137,7 +138,7 @@ class Server {
         while (in.hasNext()) {
             switch (in.next()) {
                 case "NAME":
-
+                    game.addPlayer(in.next());
                     break;
             }
         }

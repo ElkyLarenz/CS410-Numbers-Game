@@ -13,12 +13,16 @@ class Client {
     private Boolean isHost;
     private String ipAddress;
     private String[] serverIPs = new String[4];
+    private String[] serverNames = new String[4];
     private Socket socket;
+    private Game game;
 
     // client
-    Client(Boolean isHost) throws IOException{
+    Client(Boolean isHost, Game game) throws IOException{
         this.isHost = isHost;
         this.ipAddress = Network.findIPaddress();
+        this.game = game;
+
         if(isHost){
             connectSocket(Network.findIPaddress());
         } else
@@ -54,6 +58,10 @@ class Client {
         return ipAddress;
     }
 
+    String[] getServerNames(){
+        return serverNames;
+    }
+
     void findServers(){
         MulticastSocket listener = null;
         try {
@@ -69,6 +77,7 @@ class Client {
                 listener.receive(packet);
 
                 serverIPs[i] = packet.getAddress().toString();
+                serverNames[i] = new String(buf, 0, packet.getLength());
             }
 
             listener.leaveGroup(group);
@@ -94,7 +103,6 @@ class Client {
         }
     }
 
-
     void createPlayer(String name) throws IOException {
         OutputStream outstream = socket.getOutputStream();
         PrintWriter out = new PrintWriter(outstream);
@@ -110,7 +118,8 @@ class Client {
 
         while (in.hasNext()) {
             switch (in.next()) {
-                case "condition":
+                case "NAME":
+                    game.addPlayer(in.next());
             }
         }
     }
