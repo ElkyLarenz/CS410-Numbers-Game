@@ -77,7 +77,7 @@ public class Player
 
     public int[] randomHand()
     {
-        for(int i = 0; i <= hand.length; i++)
+        for(int i = 0; i <= 3; i++)
         {
             hand[i] = randomNum();
         }
