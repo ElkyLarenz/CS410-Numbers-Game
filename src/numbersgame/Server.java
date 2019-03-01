@@ -29,6 +29,8 @@ class Server {
         return ipAddress;
     }
 
+    // broadcasts IP of server by broadcasting datagram packet
+    // address 224.0.0.0, port 4446
     private class broadcastIP extends Thread {
         public void run() {
             while (lobby.getState()) {
@@ -127,6 +129,7 @@ class Server {
         while (in.hasNext()) {
             switch (in.next()) {
                 case "NAME":
+
                     break;
             }
         }
