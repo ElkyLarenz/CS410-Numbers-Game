@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
-class Client {
+public class Client {
     private Boolean isHost;
     private String ipAddress;
     private String[] serverIPs = new String[4];
@@ -74,7 +74,13 @@ class Client {
             for (int i = 0; i < 4; i++) {
                 byte[] buf = new byte[8];
                 packet = new DatagramPacket(buf, buf.length);
-                listener.receive(packet);
+
+                long startTime = System.currentTimeMillis(); //fetch starting time
+                while((System.currentTimeMillis() - startTime) < 100)
+                {
+                    System.out.println("looking for server response " + i);
+                    listener.receive(packet);
+                }
 
                 serverIPs[i] = packet.getAddress().toString();
                 serverNames[i] = new String(buf, 0, packet.getLength());
