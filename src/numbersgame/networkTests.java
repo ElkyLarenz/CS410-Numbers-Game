@@ -1,13 +1,14 @@
 package numbersgame;
-import org.junit.Test;
 
 import java.io.IOException;
 
 
 public class networkTests {
     public static void main(String[] args) throws IOException {
-        Client client = new Client();
-        Server server = new Server();
+        Player player = new Player("Tim", 0);
+        Game game = new Game();
+        Client client = new Client(false);
+        Server server = new Server(player, game);
 
         client.connectSocket(server.getIpAddress());
 

@@ -1,7 +1,6 @@
 package numbersgame;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
+import java.io.*;
 import java.net.*;
 import java.util.Arrays;
 import java.util.List;
@@ -9,49 +8,31 @@ import java.util.ListIterator;
 import java.util.concurrent.TimeUnit;
 
 class Server {
-    private ServerSocket serverSocket;
-    private String ipAddress;
+    ServerSocket ss;
     private Lobby lobby;
+    private String ipAddress;
     private DatagramSocket broadcaster;
+    private String hostName;
 
-    Server() throws IOException {
-        this.serverSocket = new ServerSocket(4444);
+
+    Server(Player host, Game game) throws IOException {
+        this.ss = new ServerSocket(3333);
         this.ipAddress = Network.findIPaddress();
         this.lobby = new Lobby();
-        this.broadcaster = new DatagramSocket(4446);
-        new broadcastIP().start();      // starts broadcasting server IP on port 4446
-        new connectClients().start();   // starts process of allowing clients to connect
-    }
+        this.hostName = host.getPlayerName();
 
-    // finds the ip address of current device
+        new broadcastIP().start();
+        startServer();
+    }
 
     String getIpAddress() {
         return ipAddress;
     }
 
-    // Threaded class that allows clients to connect on port 4445
-    private class connectClients extends Thread {
-        public void run() {
-            while(lobby.getState()){
-                Socket clientSocket = null;
-
-                try {
-                    clientSocket = serverSocket.accept();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                new Thread(new connection(clientSocket)).start();
-            }
-        }
-    }
-
-    // Threaded class that broadcasts a datagram packet on port 4446,
-    // for purposes of broadcasting ip address
     private class broadcastIP extends Thread {
         public void run() {
             while (lobby.getState()) {
-                byte[] buf = new byte[8];
+                byte[] buf;
 
                 InetAddress group = null;
                 try {
@@ -60,7 +41,10 @@ class Server {
                     e.printStackTrace();
                 }
                 DatagramPacket packet;
+
+                buf = hostName.getBytes();
                 packet = new DatagramPacket(buf, buf.length, group, 4446);
+
                 try {
                     broadcaster.send(packet);
                 } catch (IOException e) {
@@ -77,28 +61,62 @@ class Server {
         }
     }
 
+    // start server, connect clients to client handler
+    private void startServer() throws IOException {
+        while (true) {
+            Socket s = null;
 
-    private class connection implements Runnable {
-        Socket clientSocket;
-
-        connection(Socket socket) {
-            this.clientSocket = socket;
-        }
-
-        public void run() {
             try {
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                String inLine;
-                while ((inLine = in.readLine()) != null) {
-                    System.out.println(inLine);
-                    readClientMessage(inLine);
-                }
-            } catch (IOException e) {
+                s = ss.accept();
+                System.out.println("A new client has connected : " + s);
+
+                DataInputStream dis = new DataInputStream(s.getInputStream());
+                DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+
+                System.out.println("create new thread for client");
+
+                // create new thread
+                Thread t = new ClientHandler(s, dis, dos);
+
+                t.start();
+
+            } catch (Exception e) {
+                assert s != null;
+                s.close();
                 e.printStackTrace();
             }
 
         }
+    }
 
+    class ClientHandler extends Thread {
+        final DataInputStream dis;
+        final DataOutputStream dos;
+        final Socket s;
+
+        ClientHandler(Socket s, DataInputStream dis, DataOutputStream dos) {
+            this.s = s;
+            this.dis = dis;
+            this.dos = dos;
+        }
+
+        @Override
+        public void run() {
+            String recieved;
+            String toreturn;
+            while (true) {
+                try {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(dis));
+                    System.out.println("waiting for client input");
+                    while ((recieved = in.readLine()) != null) {
+                        System.out.println(recieved);
+                        readClientMessage(recieved);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     private void readClientMessage(String inputString) {
@@ -109,7 +127,6 @@ class Server {
         while (in.hasNext()) {
             switch (in.next()) {
                 case "NAME":
-                    lobby.addPlayer(new Player(in.next()));
                     break;
             }
         }

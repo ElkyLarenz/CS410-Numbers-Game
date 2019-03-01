@@ -1,22 +1,28 @@
 package numbersgame;
 
 import java.io.*;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+import java.net.Socket;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
-public class Client {
+class Client {
     private Boolean isHost;
     private String ipAddress;
     private String[] serverIPs = new String[4];
-    private Socket socket = null;
-    private DataInputStream in = null;
-    private DataOutputStream out = null;
+    private Socket socket;
 
-    public Client() throws IOException {
-        this.isHost = false;
+    // client
+    Client(Boolean isHost) throws IOException{
+        this.isHost = isHost;
         this.ipAddress = Network.findIPaddress();
+        if(isHost){
+            connectSocket(Network.findIPaddress());
+        } else
+            findServers();
     }
 
     boolean connectSocket(String ip) throws IOException {
@@ -32,15 +38,15 @@ public class Client {
         return true;
     }
 
-    public void becomeHost() {
+    void becomeHost() {
         this.isHost = true;
     }
 
-    public boolean getHost() {
+    boolean getHost() {
         return isHost;
     }
 
-    public String[] getServerIPs() {
+    String[] getServerIPs() {
         return serverIPs;
     }
 
@@ -48,33 +54,29 @@ public class Client {
         return ipAddress;
     }
 
-    class findServers extends Thread {
-        public void run() {
+    void findServers(){
+        MulticastSocket listener = null;
+        try {
+            listener = new MulticastSocket(4446);
+            InetAddress group = InetAddress.getByName("224.0.0.0");
+            listener.joinGroup(group);
+            System.out.println("looking for available servers");
 
-            MulticastSocket listener = null;
-            try {
-                listener = new MulticastSocket(4446);
-                InetAddress group = InetAddress.getByName("224.0.0.0");
-                listener.joinGroup(group);
-                System.out.println("looking for available servers");
+            DatagramPacket packet;
+            for (int i = 0; i < 4; i++) {
+                byte[] buf = new byte[8];
+                packet = new DatagramPacket(buf, buf.length);
+                listener.receive(packet);
 
-                DatagramPacket packet;
-                for (int i = 0; i < 4; i++) {
-                    byte[] buf = new byte[8];
-                    packet = new DatagramPacket(buf, buf.length);
-                    listener.receive(packet);
-
-                    serverIPs[i] = packet.getAddress().toString();
-                }
-
-                listener.leaveGroup(group);
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+                serverIPs[i] = packet.getAddress().toString();
             }
+
+            listener.leaveGroup(group);
+            listener.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-
 
     private class connection extends Thread {
         public void run() {
@@ -109,7 +111,6 @@ public class Client {
             switch (in.next()) {
                 case "condition":
             }
-
         }
     }
 }
