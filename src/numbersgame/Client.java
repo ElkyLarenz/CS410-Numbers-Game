@@ -78,12 +78,12 @@ public class Client {
                 System.out.println("looking for server response " + i);
                 try {
                     listener.receive(packet);
+                    serverIPs[i] = packet.getAddress().toString();
+                    serverNames[i] = new String(buf, 0, packet.getLength());
                 } catch (IOException e){
                     System.out.println("server search timeout");
                 }
 
-                serverIPs[i] = packet.getAddress().toString();
-                serverNames[i] = new String(buf, 0, packet.getLength());
             }
 
             listener.leaveGroup(group);
