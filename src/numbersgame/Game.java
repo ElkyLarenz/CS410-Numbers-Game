@@ -56,9 +56,9 @@ public class Game {
 	}
 	
 	//This will add score from the main player("its the one on this device")
-	public void addScore(int in)
+	public void addScore(int in, int cards)
 	{
-		players[localPlayPos].addScore(in);
+		players[localPlayPos].addScore(in, cards);
 	}
 	
 	/*
@@ -67,7 +67,7 @@ public class Game {
 	 */
 	public int getScore()
 	{
-		return players[localPlayPos].getScore;
+		return players[localPlayPos].getScore();
 	}
 	
 	/*
@@ -132,9 +132,9 @@ public class Game {
 	 * The GUI will use this method to add the number the local player 
 	 * added to their hand
 	 */
-	public void addNumbertoLocal(int in)
+	public void addNumbertoLocal(int[]hand, int in)
 	{
-		players[playerIndex].addNumber(in);
+		players[playerIndex].addNumber(hand, in);
 	}
 	
 	/*

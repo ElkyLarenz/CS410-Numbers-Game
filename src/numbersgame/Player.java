@@ -1,7 +1,11 @@
 package numbersgame;
+
 public class Player
 {
+
     private String PlayerName;
+    public int PlayerScore;
+    public int Won;
     private boolean connected = false;
     private int id;
     Player()
@@ -33,6 +37,7 @@ public class Player
         return PlayerName;
         //returns the name as a string
     }
+
     
     public void setConnection(boolean in)
     {
@@ -61,7 +66,37 @@ public class Player
         return AddedNum;
 
     }
+    public void randomNum()
+    {
+        //this is to generate a random number
+        int rand = (int)(Math.random() * 20 + 1);
 
 
+    }
+
+    public boolean setCheck()
+    {
+        return false;
+    }
+
+    public int getScore()
+    {
+        return this.PlayerScore;
+    }
+    public int GetWon()
+    {
+        return Won;
+    }
+    public int AddtoWon() {
+        return Won++;
+    }
+    public void addScore(int in, int cards)
+    {
+        //the score added is the number of cards in hand
+
+
+        in = in + cards;
+
+    }
 }
 
