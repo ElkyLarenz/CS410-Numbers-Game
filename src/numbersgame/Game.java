@@ -125,7 +125,15 @@ public class Game {
 		}
 	}
 	
-	
+	/*
+	 * Gui uses this to get superset 2D array
+	 * 
+	 */
+	public boolean[][] getSupersetArray()
+	{
+		this.setupSuperSet();
+		return superSets;
+	}
 	
 	
 	/*
@@ -182,9 +190,9 @@ public class Game {
 	 * The GUI will use this method to add the number the local player 
 	 * added to their hand
 	 */
-	public void addNumbertoLocal(int[]hand, int in)
+	public void addNumbertoLocal(int in)
 	{
-		players[playerIndex].addNumber(hand, in);
+		players[localPlayPos].addNumber(in);
 	}
 	
 	/*
@@ -209,6 +217,25 @@ public class Game {
 		playerTurn = 0;
 		//enable gui of the player whos turn it is
 		
+		
+	}
+	/*
+	 * This checks if its localPlayers turn
+	 */
+	public boolean checkIfLocalTurn()
+	{
+		if(playerTurn == localPlayPos)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public void tellGuiItsLocalTurn()
+	{
 		
 	}
 	
