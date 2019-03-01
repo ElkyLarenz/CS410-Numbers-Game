@@ -34,11 +34,17 @@ public class Game {
 	{
 		if(in == true)
 		{
-			hostServer = new Server();
+			players[0].setPlayerName(localPlayerName);
+			hostServer = new Server(players[0], this);
 			gameClient = new Client(true);
+			
 		}
 		else
+		{
 			gameClient = new Client(false);
+		}
+		
+		gameClient.createPlayer(localPlayerName);
 	}
 	
 	public String localPlayerName()
@@ -47,9 +53,9 @@ public class Game {
 	}
 	
 	//This will add score from the main player("its the one on this device")
-	public void addScore(int in, int cards)
+	public void addScore(int in)
 	{
-		players[localPlayPos].addScore(in, cards);
+		players[localPlayPos].addScore(in);
 	}
 	
 	/*
@@ -58,7 +64,7 @@ public class Game {
 	 */
 	public int getScore()
 	{
-		return players[localPlayPos].getScore();
+		return players[localPlayPos].getScore;
 	}
 	
 	/*
@@ -96,7 +102,7 @@ public class Game {
 	 */
 	public void setName(String in) throws IOException
 	{
-		gameClient.createPlayer(in);
+		
 		localPlayerName = in;
 	}
 	
