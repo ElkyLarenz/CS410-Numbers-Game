@@ -4,7 +4,7 @@ public class Player
 {
     private String PlayerName;
     public int PlayerScore;
-    public int Won;
+    public int won;
     private boolean connected = false;
     private int id;
     public int[] hand;
@@ -67,12 +67,21 @@ public class Player
 
 
     }
-    public void randomNum()
+    public int randomNum()
     {
         //this is to generate a random number
         int rand = (int)(Math.random() * 20 + 1);
 
+        return rand;
+    }
 
+    public int[] randomHand()
+    {
+        for(int i = 0; i <= 3; i++)
+        {
+            hand[i] = randomNum();
+        }
+        return hand;
     }
 
     public boolean setCheck()
@@ -86,10 +95,10 @@ public class Player
     }
     public int GetWon()
     {
-        return Won;
+        return won;
     }
     public int AddtoWon() {
-        return Won++;
+        return won++;
     }
     public void addScore(int in, int num)
     {
