@@ -14,6 +14,7 @@ public class Game {
 	Client gameClient = null; //this creates the client for the player
 	int playerTurn; //this will keep track of whos turn it is
 	String localPlayerName; //this holds the name of the local player
+	Server hostServer;
 	/*
 	 * This constructer sets the round to 1
 	 * and creates the client
@@ -21,13 +22,23 @@ public class Game {
 	public Game() throws IOException
 	{
 		round = 1;
-		gameClient = new Client();
+		
 		for(int i = 0; i < 4; i++)
 		{
 			String empty = "";
 			Player temp = new Player(empty, (i+1));
 			players[i] = temp; 
 		}
+	}
+	public void createClient(boolean in) throws IOException
+	{
+		if(in == true)
+		{
+			hostServer = new Server();
+			gameClient = new Client(true);
+		}
+		else
+			gameClient = new Client(false);
 	}
 	
 	public String localPlayerName()
