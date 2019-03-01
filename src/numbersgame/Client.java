@@ -18,15 +18,14 @@ public class Client {
     private Game game;
 
     // client
-    Client(Boolean isHost, Game game) throws IOException{
+    Client(Boolean isHost, Game game) throws IOException {
         this.isHost = isHost;
         this.ipAddress = Network.findIPaddress();
         this.game = game;
 
-        if(isHost){
+        if (isHost) {
             connectSocket(Network.findIPaddress());
-        } else
-            findServers();
+        }
     }
 
     boolean connectSocket(String ip) throws IOException {
@@ -42,30 +41,31 @@ public class Client {
         return true;
     }
 
-    void becomeHost() {
+    public void becomeHost() {
         this.isHost = true;
     }
 
-    boolean getHost() {
+    public boolean getHost() {
         return isHost;
     }
 
-    String[] getServerIPs() {
+    public String[] getServerIPs() {
         return serverIPs;
     }
 
-    String getIpAddress() {
+    public String getIpAddress() {
         return ipAddress;
     }
 
-    String[] getServerNames(){
+    public String[] getServerNames() {
         return serverNames;
     }
 
-    void findServers(){
+    public void findServers() {
         MulticastSocket listener = null;
         try {
             listener = new MulticastSocket(4445);
+            listener.setSoTimeout(100);
             InetAddress group = InetAddress.getByName("224.0.0.0");
             listener.joinGroup(group);
             System.out.println("looking for available servers");
@@ -76,11 +76,8 @@ public class Client {
                 packet = new DatagramPacket(buf, buf.length);
 
                 long startTime = System.currentTimeMillis(); //fetch starting time
-                while((System.currentTimeMillis() - startTime) < 100)
-                {
-                    System.out.println("looking for server response " + i);
-                    listener.receive(packet);
-                }
+                System.out.println("looking for server response " + i);
+                listener.receive(packet);
 
                 serverIPs[i] = packet.getAddress().toString();
                 serverNames[i] = new String(buf, 0, packet.getLength());
