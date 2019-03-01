@@ -48,6 +48,22 @@ public class Player
     {
     	return id;
     }
+    public int addNumber(int[]hand, int num)
+    {
+        //adds number from gui into player hand
+       // int[] num = new int[hand.length];
+        int AddedNum = 0;
+        for (int i=0; i < hand.length; i++)
+        {
+            hand[i] = AddedNum;
+            AddedNum += num;
+        }
+        int j;
+
+
+        return AddedNum;
+
+    }
 
 
 }

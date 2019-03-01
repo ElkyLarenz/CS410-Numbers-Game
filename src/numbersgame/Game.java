@@ -36,9 +36,9 @@ public class Game {
 	}
 	
 	//This will add score from the main player("its the one on this device")
-	public void addScore(int in)
+	public void addScore(int in, int cards)
 	{
-		players[localPlayPos].addScore(in);
+		players[localPlayPos].addScore(in, cards);
 	}
 	
 	/*
@@ -47,7 +47,7 @@ public class Game {
 	 */
 	public int getScore()
 	{
-		return players[localPlayPos].getScore;
+		return players[localPlayPos].getScore();
 	}
 	
 	/*

@@ -1,6 +1,7 @@
 package numbersgame;
 import java.util.ArrayList;
 
+//function of the server on the host machine
 class Lobby {
     private ArrayList<Player> players;
     private Boolean notFull;
