@@ -36,6 +36,17 @@ public class ServerBrowserPanel extends JPanel
 		this.add( scrollPane );
 	}
 	
+	public String getSelectedIP()
+	{
+		String ip = "";
+		int rowIndex = serverTable.getSelectedRow();
+		
+		if ( rowIndex > -1 )
+			ip = (String) serverTable.getModel().getValueAt( rowIndex, 0 );
+		
+		return ip;
+	}
+	
 	public void updateTable()
 	{
 		ServerInfo[] serverList = browser.getServerList();

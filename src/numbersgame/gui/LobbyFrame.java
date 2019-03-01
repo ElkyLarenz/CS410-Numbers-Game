@@ -75,13 +75,17 @@ public class LobbyFrame extends JFrame
 		content.removeAll();
 		
 		mainPanel = new JPanel();
+		LobbyPlayerPanel[] playerPanels = new LobbyPlayerPanel[ 4 ];
+		Player[] players = gui.getGame().getPlayerArray();
 		
 		mainPanel.setLayout( new GridLayout( 2, 2 ) );
-		// temporary players for testing purposes.
-		mainPanel.add( new LobbyPlayerPanel( new Player( "Albert" ), 1 ) );
-		mainPanel.add( new LobbyPlayerPanel( new Player( "Barry" ), 2 ) );
-		mainPanel.add( new LobbyPlayerPanel( new Player( "Chris" ), 3 ) );
-		mainPanel.add( new LobbyPlayerPanel( new Player( "Derek" ), 4 ) );
+		
+		for ( int i = 0; i < 4; i++ )
+		{
+			LobbyPlayerPanel newPanel = new LobbyPlayerPanel( players[ i ], players[ i ].getID() );
+			playerPanels[ i ] = newPanel;
+			mainPanel.add( newPanel );
+		}
 		
 		content.add( mainPanel );
 
@@ -103,6 +107,8 @@ public class LobbyFrame extends JFrame
 		LobbyButton refreshButton = new LobbyButton( "Refresh List" );
 		LobbyButton joinButton = new LobbyButton( "Join Server" );
 		ServerBrowserButtonListener serverBrowserButtonListener = new ServerBrowserButtonListener( this, serverBrowserPanel );
+		
+		label.setFont( titleFont );
 		
 		refreshButton.addActionListener( serverBrowserButtonListener );
 		joinButton.addActionListener( serverBrowserButtonListener );

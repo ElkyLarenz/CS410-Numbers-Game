@@ -30,6 +30,13 @@ public class ServerBrowserButtonListener implements ActionListener
 			if ( button.getText().equals( "Refresh List" ) )
 			{
 				serverBrowserPanel.updateTable();
+			} else if ( button.getText().equals( "Join Server" ) )
+			{
+				if ( !serverBrowserPanel.getSelectedIP().equals( "" ) )
+				{
+					System.out.println( "Joining: " + serverBrowserPanel.getSelectedIP() );
+					lobbyWindow.showLobbyScreen();
+				}
 			}
 		}
 	}

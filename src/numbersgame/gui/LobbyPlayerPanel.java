@@ -28,14 +28,28 @@ public class LobbyPlayerPanel extends JPanel
 		this.player = player;
 		this.position = position;
 		
-		JLabel playerLabel = new JLabel( "Player " + position );
+		this.setLayout( new BorderLayout() );
+		
+		JLabel playerLabel = new JLabel( position + ". Player " + player.getID() );
+		if ( player.getID() == 1 )
+			playerLabel.setText( playerLabel.getText() + " (host)" );
 		JLabel nameLabel = new JLabel( player.getPlayerName() );
+		JLabel connectedLabel = new JLabel( "Not connected" );
+		connectedLabel.setForeground( Color.red );
+		
 		this.setBorder( BorderFactory.createLineBorder( Color.BLACK ) );
+		
+		if ( player.getConnection() )
+		{
+			connectedLabel.setText( "Connected" );
+			connectedLabel.setForeground( Color.green );
+		}
 		
 		playerLabel.setFont( LobbyFrame.titleFont );
 		
 		this.add( playerLabel, BorderLayout.NORTH );
-		this.add( nameLabel, BorderLayout.NORTH );
+		this.add( nameLabel, BorderLayout.CENTER );
+		this.add( connectedLabel, BorderLayout.SOUTH );
 	}
 	
 	public Player getPlayer()
@@ -46,5 +60,11 @@ public class LobbyPlayerPanel extends JPanel
 	public int getPosition()
 	{
 		return position;
+	}
+	
+	public void refresh()
+	{
+		this.validate();
+		this.repaint();
 	}
 }

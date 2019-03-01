@@ -8,6 +8,7 @@
 package numbersgame.gui;
 
 import java.awt.Dimension;
+import java.io.IOException;
 
 import numbersgame.Game;
 
@@ -38,7 +39,12 @@ public class GUI
 	
 	public void setPlayerName( String name )
 	{
-		//game.setName( name );
+		try {
+			game.setName( name );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void playerConnected()
@@ -46,9 +52,14 @@ public class GUI
 		
 	}
 	
-	public void makeHost()
+	public void start( boolean isHost )
 	{
-		isHost = true;
+		try {
+			game.createClient( isHost );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public boolean isHost()
