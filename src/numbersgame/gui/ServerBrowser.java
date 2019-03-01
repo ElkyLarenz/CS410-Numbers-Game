@@ -7,22 +7,34 @@
 
 package numbersgame.gui;
 
+import numbersgame.Client;
+
 public class ServerBrowser
 {
+	Client client;
 	ServerInfo[] serverList;
 	
-	public ServerBrowser()
+	public ServerBrowser( Client client )
 	{
+		this.client = client;
 		refreshServerList();
 	}
 	
 	public void refreshServerList()
 	{
-		// Testing only
-		serverList = new ServerInfo[ 3 ];
-		serverList[ 0 ] = new ServerInfo( "111.111.1.1", "Bob" );
-		serverList[ 1 ] = new ServerInfo( "222.222.2.2", "Bill" );
-		serverList[ 2 ] = new ServerInfo( "333.333.3.3", "John" );
+		client.findServers();
+		String[] ips = client.getServerIPs();
+		String[] names = client.getServerNames();
+		serverList = new ServerInfo[ ips.length ];
+		
+		for ( int i = 0; i < ips.length; i++ )
+		{
+			if ( ips[ i ] != null )
+			{
+				serverList[ i ] = new ServerInfo( ips[ i ], names[ i ] );
+				
+			}
+		}
 	}
 	
 	public int getNumberOfServers()

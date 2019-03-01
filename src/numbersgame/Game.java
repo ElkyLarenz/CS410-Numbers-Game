@@ -40,6 +40,7 @@ public class Game {
 			players[0].setConnection(true);
 			hostServer = new Server(players[0], this);
 			gameClient = new Client(true, this);
+			gameClient.createPlayer(localPlayerName);
 			
 		}
 		else
@@ -47,7 +48,6 @@ public class Game {
 			gameClient = new Client(false, this);
 		}
 		
-		gameClient.createPlayer(localPlayerName);
 	}
 	
 	public String localPlayerName()
