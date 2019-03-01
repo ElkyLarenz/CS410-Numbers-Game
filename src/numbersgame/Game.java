@@ -71,7 +71,7 @@ public class Game {
 
 	{
 		return players[localPlayPos].getScore();
->
+//>
 	}
 	
 	/*

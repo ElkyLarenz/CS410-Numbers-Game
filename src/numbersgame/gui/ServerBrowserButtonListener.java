@@ -9,6 +9,7 @@ package numbersgame.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class ServerBrowserButtonListener implements ActionListener
 {
@@ -35,7 +36,13 @@ public class ServerBrowserButtonListener implements ActionListener
 			{
 				if ( !serverBrowserPanel.getSelectedIP().equals( "" ) )
 				{
-					System.out.println( "Joining: " + serverBrowserPanel.getSelectedIP() );
+					try {
+						lobbyWindow.getGUI().getClient().connectSocket( serverBrowserPanel.getSelectedIP() );
+						lobbyWindow.getGUI().getClient().createPlayer( lobbyWindow.getGUI().getGame().localPlayerName() );
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					lobbyWindow.showLobbyScreen();
 				}
 			}
