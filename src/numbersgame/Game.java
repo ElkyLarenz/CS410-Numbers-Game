@@ -30,10 +30,12 @@ public class Game {
 			players[i] = temp; 
 		}
 	}
+
 	public void createClient(boolean in) throws IOException
 	{
 		if(in == true)
 		{
+
 			players[0].setPlayerName(localPlayerName);
 			hostServer = new Server(players[0], this);
 			gameClient = new Client(true);
