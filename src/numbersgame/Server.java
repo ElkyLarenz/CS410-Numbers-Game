@@ -20,7 +20,7 @@ class Server {
         this.ipAddress = Network.findIPaddress();
         this.lobby = new Lobby();
         this.hostName = host.getPlayerName();
-        this.broadcaster = new DatagramSocket(4445);
+        this.broadcaster = new DatagramSocket();
         this.game = game;
 
         new broadcastIP().start();
@@ -41,7 +41,7 @@ class Server {
 
                 InetAddress group = null;
                 try {
-                    group = InetAddress.getByName("224.0.0.0");
+                    group = InetAddress.getByName("230.0.0.0");
                 } catch (UnknownHostException e) {
                     e.printStackTrace();
                 }
