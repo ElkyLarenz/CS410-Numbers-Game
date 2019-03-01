@@ -29,6 +29,7 @@ public class ServerBrowserButtonListener implements ActionListener
 			
 			if ( button.getText().equals( "Refresh List" ) )
 			{
+				serverBrowserPanel.getServerBrowser().refreshServerList();
 				serverBrowserPanel.updateTable();
 			} else if ( button.getText().equals( "Join Server" ) )
 			{

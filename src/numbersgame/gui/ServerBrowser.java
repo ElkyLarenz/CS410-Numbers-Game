@@ -32,7 +32,7 @@ public class ServerBrowser
 			if ( ips[ i ] != null )
 			{
 				serverList[ i ] = new ServerInfo( ips[ i ], names[ i ] );
-				
+				System.out.println( "!!!! Added new server !!!!" );
 			}
 		}
 	}

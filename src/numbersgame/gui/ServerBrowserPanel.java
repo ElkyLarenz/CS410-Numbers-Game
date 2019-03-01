@@ -67,4 +67,9 @@ public class ServerBrowserPanel extends JPanel
 		this.repaint();
 		System.out.println( "server browser table updated" );
 	}
+	
+	public ServerBrowser getServerBrowser()
+	{
+		return browser;
+	}
 }
