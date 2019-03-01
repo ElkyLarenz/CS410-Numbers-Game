@@ -54,8 +54,11 @@ public class ServerBrowserPanel extends JPanel
 		
 		for ( int i = 0; i < browser.getNumberOfServers(); i++ )
 		{
-			String[] rowData = { serverList[ i ].getIPAddress(), serverList[ i ].getHostName() };
-			tableModel.addRow( rowData );
+			if ( serverList[ i ] != null )
+			{
+				String[] rowData = { serverList[ i ].getIPAddress(), serverList[ i ].getHostName() };
+				tableModel.addRow( rowData );
+			}
 		}
 		
 		serverTable.setModel( tableModel );
