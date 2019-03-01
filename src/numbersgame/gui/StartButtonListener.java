@@ -33,8 +33,8 @@ public class StartButtonListener implements ActionListener
 				lobbyWindow.showLobbyScreen();
 			} else if ( button.getText().equals( "Join Game" ) )
 			{
-				lobbyWindow.showServerBrowser();
 				lobbyWindow.getGUI().start( false );
+				lobbyWindow.showServerBrowser();
 			}
 		}
 	}

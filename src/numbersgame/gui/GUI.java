@@ -11,12 +11,14 @@ import java.awt.Dimension;
 import java.io.IOException;
 
 import numbersgame.Game;
+import numbersgame.Client;
 
 public class GUI
 {
 	private LobbyFrame lobbyWindow;
 	public static Dimension defaultWindowSize = new Dimension( 1024, 768 );
 	private Game game;
+	private Client client;
 	private boolean isHost;
 	
 	public GUI()
@@ -56,6 +58,7 @@ public class GUI
 	{
 		try {
 			game.createClient( isHost );
+			client = game.getClient();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -65,5 +68,10 @@ public class GUI
 	public boolean isHost()
 	{
 		return isHost;
+	}
+	
+	public Client getClient()
+	{
+		return client;
 	}
 }

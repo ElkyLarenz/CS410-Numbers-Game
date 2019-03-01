@@ -75,12 +75,15 @@ public class Client {
                 byte[] buf = new byte[8];
                 packet = new DatagramPacket(buf, buf.length);
 
-                long startTime = System.currentTimeMillis(); //fetch starting time
                 System.out.println("looking for server response " + i);
-                listener.receive(packet);
+                try {
+                    listener.receive(packet);
+                    serverIPs[i] = packet.getAddress().toString();
+                    serverNames[i] = new String(buf, 0, packet.getLength());
+                } catch (IOException e){
+                    System.out.println("server search timeout");
+                }
 
-                serverIPs[i] = packet.getAddress().toString();
-                serverNames[i] = new String(buf, 0, packet.getLength());
             }
 
             listener.leaveGroup(group);
@@ -106,6 +109,7 @@ public class Client {
         }
     }
 
+    // send player name to server to create player
     void createPlayer(String name) throws IOException {
         OutputStream outstream = socket.getOutputStream();
         PrintWriter out = new PrintWriter(outstream);
