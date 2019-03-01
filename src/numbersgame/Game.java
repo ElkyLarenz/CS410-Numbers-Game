@@ -39,12 +39,12 @@ public class Game {
 			players[0].setPlayerName(localPlayerName);
 			players[0].setConnection(true);
 			hostServer = new Server(players[0], this);
-			gameClient = new Client(true);
+			gameClient = new Client(true, this);
 			
 		}
 		else
 		{
-			gameClient = new Client(false);
+			gameClient = new Client(false, this);
 		}
 		
 		gameClient.createPlayer(localPlayerName);
@@ -168,4 +168,14 @@ public class Game {
 		playerTurn = in;
 	}
 	
+	public void shiftPlayers()
+	{
+		Player temp;
+		temp = players[3];
+		for(int i = 2; i < 0; i--)
+		{
+			players[i+1] = players[i];
+		}
+		players[0] = temp;
+	}
 }
