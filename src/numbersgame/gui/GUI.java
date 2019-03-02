@@ -30,7 +30,7 @@ public class GUI
 		isHost = false;
 		gameInProgress = false;
 		lobbyWindow = new LobbyFrame( this );
-		lobbyWindow.showLobbyScreen();
+//		lobbyWindow.showLobbyScreen();
 		lobbyWindow.setVisible( true );
 //		lobbyWindow.displayNameInput(); // Bypass the lobby screen for now.
 		
@@ -53,6 +53,18 @@ public class GUI
 	{
 		try {
 			game.setName( name );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void connectToIP( String ipAddress )
+	{
+		try {
+			System.out.println( "Connecting to " + ipAddress );
+			client.connectSocket( ipAddress );
+			client.createPlayer( game.localPlayerName() );
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

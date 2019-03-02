@@ -109,35 +109,44 @@ public class LobbyFrame extends JFrame
 	
 	public void showServerBrowser()
 	{
-		Container content = this.getContentPane();
-		content.removeAll();
+//		Container content = this.getContentPane();
+//		content.removeAll();
+//		
+//		mainPanel = new JPanel();
+//		mainPanel.setLayout( new BorderLayout() );
+//		JPanel buttonPanel = new JPanel();
+//		buttonPanel.setLayout( new GridLayout( 1, 2 ) );
+//		JLabel label = new JLabel( "Select a server to join" );
+//		ServerBrowser browser = new ServerBrowser( gui.getClient() );
+//		ServerBrowserPanel serverBrowserPanel = new ServerBrowserPanel( browser );
+//		LobbyButton refreshButton = new LobbyButton( "Refresh List" );
+//		LobbyButton joinButton = new LobbyButton( "Join Server" );
+//		ServerBrowserButtonListener serverBrowserButtonListener = new ServerBrowserButtonListener( this, serverBrowserPanel );
+//		
+//		label.setFont( titleFont );
+//		
+//		refreshButton.addActionListener( serverBrowserButtonListener );
+//		joinButton.addActionListener( serverBrowserButtonListener );
+//		
+//		buttonPanel.add( refreshButton );
+//		buttonPanel.add( joinButton );
+//		
+//		mainPanel.add( label, BorderLayout.NORTH );
+//		mainPanel.add( serverBrowserPanel, BorderLayout.CENTER );
+//		mainPanel.add( buttonPanel, BorderLayout.SOUTH );
+//		
+//		content.add( mainPanel );
+//		
+//		refresh();
 		
-		mainPanel = new JPanel();
-		mainPanel.setLayout( new BorderLayout() );
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout( new GridLayout( 1, 2 ) );
-		JLabel label = new JLabel( "Select a server to join" );
-		ServerBrowser browser = new ServerBrowser( gui.getClient() );
-		ServerBrowserPanel serverBrowserPanel = new ServerBrowserPanel( browser );
-		LobbyButton refreshButton = new LobbyButton( "Refresh List" );
-		LobbyButton joinButton = new LobbyButton( "Join Server" );
-		ServerBrowserButtonListener serverBrowserButtonListener = new ServerBrowserButtonListener( this, serverBrowserPanel );
+		displayIPInput();
+	}
+	
+	public void displayIPInput()
+	{
+		String ip = JOptionPane.showInputDialog( "Enter IP Address to join" );
 		
-		label.setFont( titleFont );
-		
-		refreshButton.addActionListener( serverBrowserButtonListener );
-		joinButton.addActionListener( serverBrowserButtonListener );
-		
-		buttonPanel.add( refreshButton );
-		buttonPanel.add( joinButton );
-		
-		mainPanel.add( label, BorderLayout.NORTH );
-		mainPanel.add( serverBrowserPanel, BorderLayout.CENTER );
-		mainPanel.add( buttonPanel, BorderLayout.SOUTH );
-		
-		content.add( mainPanel );
-		
-		refresh();
+		gui.connectToIP( ip );
 	}
 	
 	public void displayNameInput()
