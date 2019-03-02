@@ -11,8 +11,8 @@ import numbersgame.Client;
 
 public class ServerBrowser
 {
-	Client client;
-	ServerInfo[] serverList;
+	private Client client;
+	private ServerInfo[] serverList;
 	
 	public ServerBrowser( Client client )
 	{
@@ -37,6 +37,11 @@ public class ServerBrowser
 //			}
 //		}
 		serverList[ 0 ] = new ServerInfo( "10.19.108.12", "Tim" );		
+	}
+	
+	public Client getClient()
+	{
+		return client;
 	}
 	
 	public int getNumberOfServers()

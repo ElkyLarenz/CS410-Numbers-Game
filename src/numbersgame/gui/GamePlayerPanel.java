@@ -1,3 +1,10 @@
+
+/**
+ * GamePlayerPanel
+ * 
+ * Shows the name of the player on the game window.
+ */
+
 package numbersgame.gui;
 
 import java.awt.BorderLayout;
@@ -13,7 +20,7 @@ import numbersgame.Player;
 public class GamePlayerPanel extends JPanel
 {
 	private Player player;
-	JLabel nameLabel;
+	private JLabel nameLabel;
 	
 	public GamePlayerPanel( Player player )
 	{

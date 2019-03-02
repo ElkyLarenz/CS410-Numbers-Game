@@ -1,3 +1,10 @@
+
+/**
+ * GameButton
+ * 
+ * A button used on the game window.
+ */
+
 package numbersgame.gui;
 
 import javax.swing.JButton;

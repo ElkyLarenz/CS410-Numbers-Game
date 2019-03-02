@@ -17,11 +17,12 @@ public class GUI
 {
 	private LobbyFrame lobbyWindow;
 	private GameFrame gameWindow;
-	public static Dimension defaultWindowSize = new Dimension( 1024, 768 );
 	private Game game;
 	private Client client;
 	private boolean isHost;
 	private boolean gameInProgress;
+
+	public static Dimension defaultWindowSize = new Dimension( 1024, 768 );
 	
 	public GUI( Game game )
 	{
@@ -39,8 +40,17 @@ public class GUI
 	public void startGame()
 	{
 		gameInProgress = true;
-		gameWindow = new GameFrame( this );
 		lobbyWindow.setVisible( false );
+		
+		beginNewRound();
+	}
+	
+	public void beginNewRound()
+	{
+		if ( gameWindow != null )
+			gameWindow.setVisible( false );
+		
+		gameWindow = new GameFrame( this );
 		gameWindow.setVisible( true );
 	}
 	

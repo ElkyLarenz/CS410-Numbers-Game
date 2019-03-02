@@ -11,8 +11,8 @@ public class TestDriver
 		Game game = new Game();
 		GUI gui = new GUI( game );
 		game.setGUI( gui );
-		game.setName( "C" );
-		game.addPlayer( new String[] { "A", "B", "C", "D" } );
+		game.setName( "Chris" );
+		game.addPlayer( new String[] { "Albert", "Barry", "Chris", "Derek" } );
 		gui.playerConnected();
 		gui.startGame();
 		gui.updateGameBoard();

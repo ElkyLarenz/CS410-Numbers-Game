@@ -1,4 +1,10 @@
 
+/**
+ * BoardPanel
+ * 
+ * The board that is displayed on the game window.
+ */
+
 package numbersgame.gui;
 
 import java.awt.GridLayout;
@@ -9,7 +15,7 @@ import javax.swing.JPanel;
 public class BoardPanel extends JPanel
 {
 	private GameFrame gameWindow;
-	BoardCellPanel[][] cells;
+	private BoardCellPanel[][] cells;
 	
 	public BoardPanel( GameFrame gameWindow )
 	{
@@ -22,14 +28,23 @@ public class BoardPanel extends JPanel
 		{
 			for ( int j = 0; j < 4; j++ )
 			{
-				cells[ i ][ j ] = new BoardCellPanel( this );
-				this.add( cells[ i ][ j ] );
+				BoardCellPanel newCell = new BoardCellPanel( this );
+				cells[ i ][ j ] = newCell;
+				this.add( newCell );
+				
+				if ( i == 0 )
+					newCell.setLabel( j + 1 );
+				
+				if ( j == 0 && i != 0 )
+					newCell.setLabel( i + 1 );
 			}
 		}
 	}
 	
 	public void updateCells()
 	{
+		// Check the superset array to see if we need to change the color
+		// of any of the cells.
 		boolean[][] superSetArray = gameWindow.getGUI().getGame().getSupersetArray();
 		
 		for ( int i = 0; i < 4; i++ )

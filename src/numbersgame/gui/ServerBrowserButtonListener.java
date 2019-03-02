@@ -13,8 +13,8 @@ import java.io.IOException;
 
 public class ServerBrowserButtonListener implements ActionListener
 {
-	LobbyFrame lobbyWindow;
-	ServerBrowserPanel serverBrowserPanel;
+	private LobbyFrame lobbyWindow;
+	private ServerBrowserPanel serverBrowserPanel;
 	
 	public ServerBrowserButtonListener( LobbyFrame lobbyWindow, ServerBrowserPanel serverBrowserPanel )
 	{
