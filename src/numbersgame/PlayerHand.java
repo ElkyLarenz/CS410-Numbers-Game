@@ -41,6 +41,12 @@ public class PlayerHand
         return exactNums;
     }
 
+    public void updatePlayerHand(int[] in)
+    {
+        //the player hand will now equal the new hand
+        hand = in;
+    }
+
 
 
     public void setHand(int[] hand) {
