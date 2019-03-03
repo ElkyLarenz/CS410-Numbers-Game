@@ -24,7 +24,7 @@ public class Game {
 	 */
 	public Game() throws IOException
 	{
-		playerTurn = 0;
+		
 		round = 1;
 		
 		for(int i = 0; i < 4; i++)
@@ -272,9 +272,18 @@ public class Game {
 	public void startRound()
 	{	
 		//enable gui of the player whos turn it is
+		playerTurn = 0;
+		this.startRound();
+		
+		
+	}
+	
+	public void startTurn()
+	{
 		if(this.checkIfLocalTurn() == true)
 		{
-			
+			System.out.printf("your turn");
+			gameGUI.startTurn(true);
 		}
 			}
 	
