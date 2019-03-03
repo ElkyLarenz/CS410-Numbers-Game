@@ -26,7 +26,7 @@ public class GUI
 	
 	public GUI( Game game )
 	{
-		counter = 0;
+	//	counter = 0;
 		this.game = game;
 		// Want to show this screen when the program first starts
 		isHost = false;
