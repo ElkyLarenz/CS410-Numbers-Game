@@ -27,7 +27,7 @@ class Server {
     // start server, connect clients to client handler
     class startServer extends Thread {
         @Override
-        public void run(){
+        public void run() {
             while (this.isAlive()) {
                 Socket s = null;
 
@@ -39,7 +39,7 @@ class Server {
                     DataOutputStream dos = new DataOutputStream(s.getOutputStream());
                     dosList.add(dos); // maintain a list of all connected output streams
 
-                    System.out.println("create new thread for client");
+                    System.out.println("create new thread for client: " + dosList.toString());
 
                     // create new thread
                     Thread t = new ClientHandler(s, dis, dos);
@@ -79,8 +79,8 @@ class Server {
                 try {
                     BufferedReader in = new BufferedReader(new InputStreamReader(dis));
                     System.out.println("waiting for client input");
-                    while ((received = in.readLine()) != null) {
-                        System.out.println(received);
+                    for (received = in.readLine(); received != null; received = in.readLine()) {
+                        System.out.println("SERVER RECEIVED: " + received);
                         readClientMessage(received);
                     }
                 } catch (IOException e) {
@@ -88,15 +88,13 @@ class Server {
                 }
             }
         }
-    }
 
-    // method that determine what to do based on input string
-    private void readClientMessage(String inputString) throws IOException {
-        ListIterator<String> in;
-        List<String> inputList = Arrays.asList(inputString.split(","));
-        in = inputList.listIterator();
+        // method that determine what to do based on input string
+        private void readClientMessage(String inputString) throws IOException {
+            ListIterator<String> in;
+            List<String> inputList = new ArrayList<>(Arrays.asList(inputString.split(",")));
+            in = inputList.listIterator();
 
-        while (in.hasNext()) {
             switch (in.next()) {
                 case "NAME":
                     updatePlayerNames(in.next());
@@ -106,12 +104,14 @@ class Server {
                     updatePlayerHand(inputList);
                     sendPlayerHand();
                     break;
+
             }
         }
     }
 
+
     // adds player name to the next open position in the array
-    private void updatePlayerNames(String name){
+    private void updatePlayerNames(String name) {
         playerNames.add(name);
     }
 
@@ -120,15 +120,11 @@ class Server {
         StringBuilder output = new StringBuilder();
 
         output.append("NAMES,");
-        for (String playerName : playerNames) {
-                output.append(playerName).append(",");
-        }
-
-        sendToAllConnected(output.toString());
+        sendToAllConnected(buildStandardDataList(output, playerNames));
     }
 
     // update player hand (server-side)
-    private void updatePlayerHand(List<String> inputList){
+    private void updatePlayerHand(List<String> inputList) {
         inputList.remove(0);
         hand = inputList;
     }
@@ -138,18 +134,25 @@ class Server {
         StringBuilder output = new StringBuilder();
 
         output.append("HAND,");
-        for (String hVal : hand) {
-                output.append(hVal).append(",");
-        }
-
-        sendToAllConnected(output.toString());
+        sendToAllConnected(buildStandardDataList(output, hand));
     }
 
-    // sends string to all crated dataoutputstreams
-    private void sendToAllConnected(String output) throws IOException {
+    // sends string to all created dataoutputstreams
+    private void sendToAllConnected(String output) {
         for (DataOutputStream dataOutputStream : dosList) {
-            dataOutputStream.writeUTF(output);
+            PrintWriter out = new PrintWriter(dataOutputStream, true);
+            out.println(output);
         }
+    }
+
+    private String buildStandardDataList(StringBuilder output, List<String> data) {
+        for (int i = 0; i < data.size(); i++) {
+            output.append(data.get(i));
+            if (i != data.size() - 1)
+                output.append(",");
+        }
+
+        return output.toString();
     }
 
     // broadcasts IP of server by broadcasting datagram packet

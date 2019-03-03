@@ -64,7 +64,7 @@ public class Client {
                 System.out.println("connection with server initiated");
                 String inLine;
                 while ((inLine = in.readLine()) != null) {
-                    System.out.println(inLine);
+                    System.out.println("CLIENT RECEIVED: " + inLine);
                     readServerMessage(inLine);
                 }
             } catch (IOException e) {
@@ -76,39 +76,47 @@ public class Client {
     // send player name to server to create player
     public void createPlayer(String name) throws IOException {
         OutputStream outstream = socket.getOutputStream();
-        PrintWriter out = new PrintWriter(outstream);
-
-        out.write("NAME," + name);
+        PrintWriter out = new PrintWriter(outstream, true);
+        System.out.println("Sending name: " + name);
+        out.println("NAME," + name);
     }
 
     // send player hand to server
     public void sendHand(int[] hand) throws IOException {
         OutputStream outstream = socket.getOutputStream();
-        PrintWriter out = new PrintWriter(outstream);
+        PrintWriter out = new PrintWriter(outstream, true);
+        StringBuilder output = new StringBuilder();
 
-        out.write("HAND," + Arrays.toString(hand));
+        output.append("HAND,");
+        for (int i = 0; i < hand.length; i++) {
+            output.append(hand[i]);
+            if (i != hand.length - 1)
+                output.append(",");
+        }
+
+        System.out.println("Sending hand: " + output);
+        out.println(output.toString());
     }
 
     // read server input messages
     private void readServerMessage(String inputString) {
         ListIterator<String> in;
-        List<String> inputList = Arrays.asList(inputString.split(","));
+        List<String> inputList = new ArrayList<>(Arrays.asList(inputString.split(",")));
         in = inputList.listIterator();
 
-        while (in.hasNext()) {
-            switch (in.next()) {
-                case "NAME": // case for updating player turn
-                    updatePlayerNames(inputList);
-                    break;
-                case "HAND":
-                    updatePlayerHand(inputList);
-                    break;
-            }
+        switch (in.next()) {
+            case "NAME": // case for updating player turn
+                updatePlayerNames(inputList);
+                break;
+            case "HAND":
+                updatePlayerHand(inputList);
+                break;
+
         }
     }
 
     // update the list of player names (client-side)
-    private void updatePlayerNames(List<String> inputList){
+    private void updatePlayerNames(List<String> inputList) {
         inputList.remove(0);
         String[] names = new String[inputList.size()];
         names = inputList.toArray(names);
@@ -117,12 +125,12 @@ public class Client {
     }
 
     // update players hands (client-side)
-    private void updatePlayerHand(List<String> inputList){
+    private void updatePlayerHand(List<String> inputList) {
         inputList.remove(0);
 
         int[] hand = new int[inputList.size()];
         Iterator<String> itr = inputList.iterator();
-        for(int i = 0 ;  i < hand.length ; i++){
+        for (int i = 0; i < hand.length; i++) {
             hand[i] = Integer.parseInt(itr.next());
         }
 
