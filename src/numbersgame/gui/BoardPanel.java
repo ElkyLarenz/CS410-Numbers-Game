@@ -39,6 +39,8 @@ public class BoardPanel extends JPanel
 					newCell.setLabel( i + 1 );
 			}
 		}
+		
+		updateCells();
 	}
 	
 	public void updateCells()

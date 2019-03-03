@@ -21,7 +21,6 @@ public class GUI
 	private Client client;
 	private boolean isHost;
 	private boolean gameInProgress;
-	private int counter;
 
 	public static Dimension defaultWindowSize = new Dimension( 1024, 768 );
 	
@@ -93,12 +92,17 @@ public class GUI
 	{
 		lobbyWindow.updateLobby();
 		
-		counter++;
-		
-		if ( counter >= 3 )
+		int connected = 0;
+		for ( int i = 0; i < 4; i++ )
 		{
-			startGame();
+			if ( game.getPlayerArray()[ i ].getConnection() )
+			{
+				connected++;
+			}
 		}
+		
+		if ( connected >= 4 )
+			startGame();
 	}
 	
 	public void updateGameBoard()
