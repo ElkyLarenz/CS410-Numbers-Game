@@ -95,7 +95,7 @@ public class GUI
 		
 		counter++;
 		
-		if ( counter >= 4 )
+		if ( counter >= 3 )
 		{
 			startGame();
 		}
