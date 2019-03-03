@@ -285,6 +285,8 @@ public class Game {
 			System.out.printf("your turn");
 			gameGUI.startTurn(true);
 		}
+		else
+			gameGUI.startTurn(false);
 			}
 	
 	/*
