@@ -21,11 +21,13 @@ public class GUI
 	private Client client;
 	private boolean isHost;
 	private boolean gameInProgress;
+	private int counter;
 
 	public static Dimension defaultWindowSize = new Dimension( 1024, 768 );
 	
 	public GUI( Game game )
 	{
+		counter = 0;
 		this.game = game;
 		// Want to show this screen when the program first starts
 		isHost = false;
@@ -56,6 +58,8 @@ public class GUI
 		
 		gameWindow = new GameFrame( this );
 		gameWindow.setVisible( true );
+		
+		game.startRound();
 	}
 	
 	public Game getGame()
@@ -88,6 +92,13 @@ public class GUI
 	public void playerConnected()
 	{
 		lobbyWindow.updateLobby();
+		
+		counter++;
+		
+		if ( counter >= 4 )
+		{
+			startGame();
+		}
 	}
 	
 	public void updateGameBoard()
