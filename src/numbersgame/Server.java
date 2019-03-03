@@ -96,7 +96,7 @@ class Server {
             in = inputList.listIterator();
 
             switch (in.next()) {
-                case "NAME":
+                case "NAMES":
                     updatePlayerNames(in.next());
                     sendPlayerNames();
                     break;

@@ -78,7 +78,7 @@ public class Client {
         OutputStream outstream = socket.getOutputStream();
         PrintWriter out = new PrintWriter(outstream, true);
         System.out.println("Sending name: " + name);
-        out.println("NAME," + name);
+        out.println("NAMES," + name);
     }
 
     // send player hand to server
@@ -105,7 +105,7 @@ public class Client {
         in = inputList.listIterator();
 
         switch (in.next()) {
-            case "NAME": // case for updating player turn
+            case "NAMES": // case for updating player turn
                 updatePlayerNames(inputList);
                 break;
             case "HAND":
@@ -118,9 +118,10 @@ public class Client {
     // update the list of player names (client-side)
     private void updatePlayerNames(List<String> inputList) {
         inputList.remove(0);
-        String[] names = new String[inputList.size()];
+        String[] names = new String[4];
         names = inputList.toArray(names);
 
+        System.out.println("adding to game: " + Arrays.toString(names));
         game.addPlayer(names);
     }
 

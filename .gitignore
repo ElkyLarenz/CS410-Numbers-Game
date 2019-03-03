@@ -231,3 +231,8 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/macos,linux,eclipse,windows,intellij,visualstudiocode
+.idea/encodings.xml
+.idea/misc.xml
+.idea/CS410-Numbers-Game.iml
+.idea/modules.xml
+.idea/vcs.xml
