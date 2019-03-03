@@ -296,7 +296,7 @@ public class Game {
 	{
 		if(playerTurn == localPlayPos)
 		{
-			gameGUI.startTurn();
+			
 			return true;
 		}
 		else
