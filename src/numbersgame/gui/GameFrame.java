@@ -39,6 +39,7 @@ public class GameFrame extends JFrame
 	private Dimension defaultDimension = GUI.defaultWindowSize;
 	private GUI gui;
 	private GamePlayerPanel[] playerPanels;
+	private GameHandPanel[] handPanels;
 	
 	public static Font titleFont = new Font( "Helvetica", Font.BOLD, 24 );
 	
@@ -82,12 +83,23 @@ public class GameFrame extends JFrame
 		inputPanel.add( inputButton );
 		
 		leftPanel.setLayout( new GridLayout( 4, 1 ) );
+		rightPanel.setLayout( new GridLayout( 4, 1 ) );
 		
 		playerPanels = new GamePlayerPanel[ 4 ];
+		handPanels = new GameHandPanel[ 4 ];
 		
 		for ( int i = 0; i < 4; i++ )
 		{
+			boolean isLocalPlayer = false;
+			Player player = gui.getGame().getPlayerArray()[ i ];
+			
+			if ( player == gui.getGame().getLocalPlayerObject() )
+				isLocalPlayer = true;
+			
 			playerPanels[ i ] = new GamePlayerPanel( gui.getGame().getPlayerArray()[ i ] );
+			handPanels[ i ] = new GameHandPanel( gui.getGame().getPlayerArray()[ i ], isLocalPlayer );
+			
+			rightPanel.add( handPanels[ i ] );
 			leftPanel.add( playerPanels[ i ] );
 		}
 		

@@ -10,10 +10,12 @@ package numbersgame.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import numbersgame.Player;
 
@@ -25,11 +27,14 @@ public class LobbyPlayerPanel extends JPanel
 	private JLabel playerLabel;
 	private JLabel nameLabel;
 	private JLabel connectedLabel;
+	private Font nameFont;
 	
 	public LobbyPlayerPanel( Player player, int position )
 	{
 		this.player = player;
 		this.position = position;
+		
+		nameFont = new Font( "Helvetical", Font.PLAIN, 18 );
 		
 		this.setLayout( new BorderLayout() );
 		
@@ -38,13 +43,14 @@ public class LobbyPlayerPanel extends JPanel
 		if ( player.getID() == 1 )
 			playerLabel.setText( playerLabel.getText() + " (host)" );
 		
-		nameLabel = new JLabel( player.getPlayerName() );
+		nameLabel = new JLabel( player.getPlayerName(), SwingConstants.CENTER );
 		connectedLabel = new JLabel( "Not connected" );
 		connectedLabel.setForeground( Color.red );
 		
 		this.setBorder( BorderFactory.createLineBorder( Color.BLACK ) );
 		
 		playerLabel.setFont( LobbyFrame.titleFont );
+		nameLabel.setFont( nameFont );
 		
 		this.add( playerLabel, BorderLayout.NORTH );
 		this.add( nameLabel, BorderLayout.CENTER );

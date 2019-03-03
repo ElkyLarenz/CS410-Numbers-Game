@@ -27,6 +27,7 @@ public class BoardCellPanel extends JPanel
 	{
 		this.board = board;
 		
+		label = new JLabel();
 		this.setLayout( new BorderLayout() );
 		this.setBackground( Color.red );
 		this.setBorder( BorderFactory.createLineBorder( Color.black ) );
@@ -36,14 +37,16 @@ public class BoardCellPanel extends JPanel
 	{
 		this.activated = true;
 		this.setBackground( Color.green );
+		label.setForeground( Color.black );
 		
 		refresh();
 	}
 	
 	public void setLabel( int number )
 	{
-		label = new JLabel( Integer.toString( number ) );
+		label.setText( Integer.toString( number ) );
 		label.setFont( new Font( "Helvetica", Font.PLAIN, 16 ) );
+		label.setForeground( Color.white );
 		
 		this.add( label, BorderLayout.NORTH );
 	}
