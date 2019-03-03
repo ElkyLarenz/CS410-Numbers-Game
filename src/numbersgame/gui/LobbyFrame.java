@@ -102,7 +102,8 @@ public class LobbyFrame extends JFrame
 		{
 			for ( int i = 0; i < playerPanels.length; i++ )
 			{
-				playerPanels[ i ].updatePlayerInformation();
+				if ( playerPanels[ i ] != null )
+					playerPanels[ i ].updatePlayerInformation();
 			}
 		}
 	}
@@ -147,6 +148,8 @@ public class LobbyFrame extends JFrame
 		String ip = JOptionPane.showInputDialog( "Enter IP Address to join" );
 		
 		gui.connectToIP( ip );
+		
+		showLobbyScreen();
 	}
 	
 	public void displayNameInput()

@@ -14,7 +14,7 @@ public class TestDriver
 		game.setName( "Chris" );
 		game.addPlayer( new String[] { "Albert", "Barry", "Chris", "Derek" } );
 		gui.playerConnected();
-		gui.startGame();
-		gui.updateGameBoard();
+//		gui.startGame();
+//		gui.updateGameBoard();
 	}
 }
