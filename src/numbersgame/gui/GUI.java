@@ -33,7 +33,11 @@ public class GUI
 		lobbyWindow = new LobbyFrame( this );
 //		lobbyWindow.showLobbyScreen();
 		lobbyWindow.setVisible( true );
-//		lobbyWindow.displayNameInput(); // Bypass the lobby screen for now.
+//		lobbyWindow.displayNameInput(); // Bypass the lobby screen for now.		
+	}
+	
+	public void startTurn()
+	{
 		
 	}
 	
