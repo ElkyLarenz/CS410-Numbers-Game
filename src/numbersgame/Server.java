@@ -2,78 +2,33 @@ package numbersgame;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.concurrent.TimeUnit;
 
 class Server {
-    ServerSocket ss;
-    private Lobby lobby;
-    private String ipAddress;
-    private DatagramSocket broadcaster;
-    private String hostName;
-    private Game game;
-    private List<String> playerNames;
-    private List<String> hand;
-    private List<DataOutputStream> dosList;
+    private ServerSocket ss;
+    //private DatagramSocket broadcaster;
+    //private String hostName;
+    private List<String> playerNames = new ArrayList<>();
+    private List<String> hand = new ArrayList<>();
+    private List<DataOutputStream> dosList = new ArrayList<>();
 
-    Server(Player host, Game game) throws IOException {
+    Server() throws IOException {
         this.ss = new ServerSocket(3333);
-        this.ipAddress = Network.findIPaddress();
-        this.lobby = new Lobby();
-        this.hostName = host.getPlayerName();
-        this.broadcaster = new DatagramSocket();
-        this.game = game;
+        //this.hostName = host.getPlayerName();
+        //this.broadcaster = new DatagramSocket();
 
-        new broadcastIP().start();
+        //new broadcastIP().start();
         new startServer().start();
-    }
-
-    String getIpAddress() {
-        return ipAddress;
-    }
-
-    // broadcasts IP of server by broadcasting datagram packet
-    // address 224.0.0.0, port 4446
-    private class broadcastIP extends Thread {
-        public void run() {
-            System.out.println("Broadcasting server IP");
-            while (lobby.getState()) {
-                byte[] buf;
-                InetAddress group = null;
-                try {
-                    group = InetAddress.getByName("230.0.0.0");
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                }
-                DatagramPacket packet;
-
-                buf = hostName.getBytes();
-                packet = new DatagramPacket(buf, buf.length, group, 4445);
-
-                try {
-                    broadcaster.send(packet);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    TimeUnit.MILLISECONDS.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            broadcaster.close();
-        }
     }
 
     // start server, connect clients to client handler
     class startServer extends Thread {
         @Override
         public void run(){
-            while (true) {
+            while (this.isAlive()) {
                 Socket s = null;
 
                 try {
@@ -82,7 +37,7 @@ class Server {
 
                     DataInputStream dis = new DataInputStream(s.getInputStream());
                     DataOutputStream dos = new DataOutputStream(s.getOutputStream());
-                    dosList.add(dos);
+                    dosList.add(dos); // maintain a list of all connected output streams
 
                     System.out.println("create new thread for client");
 
@@ -104,6 +59,7 @@ class Server {
         }
     }
 
+    // clienthandler - handles connections to clients
     class ClientHandler extends Thread {
         final DataInputStream dis;
         final DataOutputStream dos;
@@ -118,8 +74,8 @@ class Server {
         @Override
         public void run() {
             String received;
-            String toreturn;
-            while (true) {
+
+            while (this.isAlive()) {
                 try {
                     BufferedReader in = new BufferedReader(new InputStreamReader(dis));
                     System.out.println("waiting for client input");
@@ -134,6 +90,7 @@ class Server {
         }
     }
 
+    // method that determine what to do based on input string
     private void readClientMessage(String inputString) throws IOException {
         ListIterator<String> in;
         List<String> inputList = Arrays.asList(inputString.split(","));
@@ -166,7 +123,7 @@ class Server {
         for (String playerName : playerNames) {
                 output.append(playerName).append(",");
         }
-        
+
         sendToAllConnected(output.toString());
     }
 
@@ -188,10 +145,46 @@ class Server {
         sendToAllConnected(output.toString());
     }
 
+    // sends string to all crated dataoutputstreams
     private void sendToAllConnected(String output) throws IOException {
         for (DataOutputStream dataOutputStream : dosList) {
             dataOutputStream.writeUTF(output);
         }
     }
 
+    // broadcasts IP of server by broadcasting datagram packet
+    // address 224.0.0.0, port 4446
+/*
+    private class broadcastIP extends Thread {
+        public void run() {
+            System.out.println("Broadcasting server IP");
+            while (lobby.getState()) {
+                byte[] buf;
+                InetAddress group = null;
+                try {
+                    group = InetAddress.getByName("230.0.0.0");
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+                DatagramPacket packet;
+
+                buf = hostName.getBytes();
+                packet = new DatagramPacket(buf, buf.length, group, 4445);
+
+                try {
+                    broadcaster.send(packet);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    TimeUnit.MILLISECONDS.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            broadcaster.close();
+        }
+    }
+*/
 }

@@ -23,17 +23,17 @@ public class Client {
         }
     }
 
-    public boolean connectSocket(String ip) throws IOException {
+    // connect client to ip address
+    // at port 3333
+    public void connectSocket(String ip) {
         try {
             socket = new Socket(ip, 3333);
             System.out.println("client connected at IP: " + ip);
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
 
         new connection().start();
-        return true;
     }
 
     public void becomeHost() {
@@ -56,39 +56,7 @@ public class Client {
         return serverNames;
     }
 
-    public void findServers() {
-        MulticastSocket listener = null;
-        try {
-            listener = new MulticastSocket(4445);
-            listener.setSoTimeout(1000);
-            InetAddress group = InetAddress.getByName("230.0.0.0");
-
-            listener.joinGroup(group);
-            System.out.println("looking for available servers");
-
-            DatagramPacket packet;
-            for (int i = 0; i < 4; i++) {
-                byte[] buf = new byte[8];
-                packet = new DatagramPacket(buf, buf.length);
-
-                System.out.println("looking for server response " + i);
-                try {
-                    listener.receive(packet);
-                    serverIPs[i] = packet.getAddress().toString();
-                    serverNames[i] = new String(buf, 0, packet.getLength());
-                } catch (IOException e){
-                    System.out.println("server search timeout");
-                }
-
-            }
-
-            listener.leaveGroup(group);
-            listener.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+    // threaded class for client connection
     private class connection extends Thread {
         public void run() {
             try {
@@ -121,6 +89,7 @@ public class Client {
         out.write("HAND," + Arrays.toString(hand));
     }
 
+    // read server input messages
     private void readServerMessage(String inputString) {
         ListIterator<String> in;
         List<String> inputList = Arrays.asList(inputString.split(","));
@@ -159,4 +128,39 @@ public class Client {
 
         game.receiveHand(hand);
     }
+
+    /*
+    public void findServers() {
+        MulticastSocket listener = null;
+        try {
+            listener = new MulticastSocket(4445);
+            listener.setSoTimeout(1000);
+            InetAddress group = InetAddress.getByName("230.0.0.0");
+
+            listener.joinGroup(group);
+            System.out.println("looking for available servers");
+
+            DatagramPacket packet;
+            for (int i = 0; i < 4; i++) {
+                byte[] buf = new byte[8];
+                packet = new DatagramPacket(buf, buf.length);
+
+                System.out.println("looking for server response " + i);
+                try {
+                    listener.receive(packet);
+                    serverIPs[i] = packet.getAddress().toString();
+                    serverNames[i] = new String(buf, 0, packet.getLength());
+                } catch (IOException e){
+                    System.out.println("server search timeout");
+                }
+
+            }
+
+            listener.leaveGroup(group);
+            listener.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+*/
 }
