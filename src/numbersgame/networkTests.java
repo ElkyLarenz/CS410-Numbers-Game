@@ -1,7 +1,10 @@
 package numbersgame;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class networkTests {
     public static void main(String[] args) throws IOException {
@@ -12,9 +15,6 @@ public class networkTests {
         int[] numbers = new int[] {1, 2, 3, 4};
 
         game.gameClient.sendHand(numbers);
-        game.gameClient.createPlayer("Bob");
-
-        game.gameClient.createPlayer("Charlie");
 
         System.out.println(Arrays.toString(game.getPlayerArray()));
     }
