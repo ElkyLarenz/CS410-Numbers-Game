@@ -273,7 +273,7 @@ public class Game {
 	{	
 		//enable gui of the player whos turn it is
 		playerTurn = 0;
-		this.startRound();
+		this.startTurn();
 		
 		
 	}
