@@ -17,6 +17,7 @@ class Server {
     private Game game;
     private List<String> playerNames;
     private List<String> hand;
+    private List<DataOutputStream> dosList;
 
     Server(Player host, Game game) throws IOException {
         this.ss = new ServerSocket(3333);
@@ -81,6 +82,7 @@ class Server {
 
                     DataInputStream dis = new DataInputStream(s.getInputStream());
                     DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+                    dosList.add(dos);
 
                     System.out.println("create new thread for client");
 
@@ -123,7 +125,7 @@ class Server {
                     System.out.println("waiting for client input");
                     while ((received = in.readLine()) != null) {
                         System.out.println(received);
-                        readClientMessage(received, dos);
+                        readClientMessage(received);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -132,7 +134,7 @@ class Server {
         }
     }
 
-    private void readClientMessage(String inputString, DataOutputStream dos) throws IOException {
+    private void readClientMessage(String inputString) throws IOException {
         ListIterator<String> in;
         List<String> inputList = Arrays.asList(inputString.split(","));
         in = inputList.listIterator();
@@ -141,11 +143,11 @@ class Server {
             switch (in.next()) {
                 case "NAME":
                     updatePlayerNames(in.next());
-                    sendPlayerNames(dos);
+                    sendPlayerNames();
                     break;
                 case "HAND":
                     updatePlayerHand(inputList);
-                    sendPlayerHand(dos);
+                    sendPlayerHand();
                     break;
             }
         }
@@ -157,14 +159,15 @@ class Server {
     }
 
     // sends playerNames[] to all clients
-    private void sendPlayerNames(DataOutputStream dos) throws IOException {
+    private void sendPlayerNames() throws IOException {
         StringBuilder output = new StringBuilder();
 
         output.append("NAMES,");
         for (String playerName : playerNames) {
                 output.append(playerName).append(",");
         }
-        dos.writeUTF(output.toString());
+        
+        sendToAllConnected(output.toString());
     }
 
     // update player hand (server-side)
@@ -174,15 +177,21 @@ class Server {
     }
 
     // sends hand[] to all clients
-    private void sendPlayerHand(DataOutputStream dos) throws IOException {
+    private void sendPlayerHand() throws IOException {
         StringBuilder output = new StringBuilder();
 
         output.append("HAND,");
         for (String hVal : hand) {
                 output.append(hVal).append(",");
         }
-        dos.writeUTF(output.toString());
 
+        sendToAllConnected(output.toString());
+    }
+
+    private void sendToAllConnected(String output) throws IOException {
+        for (DataOutputStream dataOutputStream : dosList) {
+            dataOutputStream.writeUTF(output);
+        }
     }
 
 }
