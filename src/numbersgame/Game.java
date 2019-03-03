@@ -171,7 +171,7 @@ public class Game {
 		return round;
 	}
 	
-	//-------------------------------------------------------------------------------------
+	
 	public void receiveHand(int[] in)
 	{
 		players[playerTurn].updateWholeHand(in);
@@ -182,8 +182,11 @@ public class Game {
 		//here is going to be the code to send the hand
 	}
 	
-	//--------------------------------------------------------------------------------------
+
 	
+	
+	//Method that interact with GUI
+	//---------------------------------------------------------
 	public void setGUI(GUI in)
 	{
 		gameGUI = in;
@@ -209,7 +212,10 @@ public class Game {
 				players[i].setPlayerName(name[i]);
 				players[i].setConnection(true);
 				if(name[i].equals(localPlayerName))
+				{
 					localPlayPos = i;
+					System.out.println("Your location within the array is " + i);
+				}
 				
 			}
 		}
@@ -260,18 +266,18 @@ public class Game {
 		return gameClient;
 	}
 	
+	//game methods
+	//----------------------------------------------------------------------------------------------
+	//this starts the Round by checking if its players turn
 	public void startRound()
-	{
-		
+	{	
 		//enable gui of the player whos turn it is
 		if(this.checkIfLocalTurn() == true)
 		{
 			
 		}
-			
-		
-		
-	}
+			}
+	
 	/*
 	 * This checks if its localPlayers turn
 	 */
@@ -287,6 +293,9 @@ public class Game {
 			return false;
 		}
 	}
+	//------------------------------------------------------------------------------------------------------
+	
+
 	
 	public boolean checkIfLocalHasAllSuperSet()
 	{
