@@ -37,9 +37,10 @@ public class GUI
 //		lobbyWindow.displayNameInput(); // Bypass the lobby screen for now.		
 	}
 	
-	public void startTurn()
+	public void startTurn( boolean ourTurn )
 	{
-		
+		if ( ourTurn )
+			gameWindow.toggleButton( true );
 	}
 	
 	public void startGame()

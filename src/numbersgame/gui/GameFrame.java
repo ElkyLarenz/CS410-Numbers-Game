@@ -77,7 +77,7 @@ public class GameFrame extends JFrame
 		
 		inputButton = new GameButton( "Choose number" );
 		inputButton.addActionListener( gameButtonListener );
-		inputButton.setEnabled( false );
+		toggleButton( false );
 		
 		inputPanel.add( inputButton );
 		
@@ -98,6 +98,11 @@ public class GameFrame extends JFrame
 		mainPanel.add( inputPanel, BorderLayout.SOUTH );
 		
 		content.add( mainPanel );
+	}
+	
+	public void toggleButton( boolean enabled )
+	{
+		inputButton.setEnabled( enabled );
 	}
 	
 	public BoardPanel createBoard()
