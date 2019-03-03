@@ -17,6 +17,7 @@ public class Game {
 	String localPlayerName; //this holds the name of the local player
 	Server hostServer; //its the host object for the host
 	boolean[][] superSets = new boolean[4][4]; //keeps track of all supersets
+	boolean host = false;
 
 	/*
 	 * This constructer sets the round to 1
@@ -203,7 +204,7 @@ public class Game {
 	/*
 	 * Server side uses this method to add players as they are connected
 	 */
-	public void addPlayer(String[] name)
+	public void addPlayer(String[] name) throws IOException
 	{	
 		for(int i = 0; i < 4; i++)
 		{
@@ -214,6 +215,8 @@ public class Game {
 				if(name[i].equals(localPlayerName))
 				{
 					localPlayPos = i;
+					if (localPlayPos == 0)
+						host = true;
 					System.out.println("Your location within the array is " + i);
 				}
 				
@@ -269,13 +272,41 @@ public class Game {
 	//game methods
 	//----------------------------------------------------------------------------------------------
 	//this starts the Round by checking if its players turn
-	public void startRound()
+	public void startRound() throws IOException
 	{	
 		//enable gui of the player whos turn it is
+		
 		playerTurn = 0;
+		if(host == true)
+			this.setUpHand();
 		this.startTurn();
-		
-		
+	}
+	
+	public void setUpHand()
+	{
+		Random rnd = new Random();
+		int[][] tempHand = new int[4][3];
+		for(int i = 0; i < 4; i++)
+		{
+			for(int j = 0; j < 3; j++)
+			{
+				tempHand[i][j] = rnd.nextInt(19)+1;
+			}	
+
+		}
+		//then send hand
+	}
+	
+	public void receiveSetupHand(int[][] in)
+	{
+		for(int i = 0; i < 4; i++)
+		{
+			for(int j = 0; j < 3; j++)
+			{
+				players[i].addNumber(in[i][j]);
+			}	
+
+		}
 	}
 	
 	public void startTurn()

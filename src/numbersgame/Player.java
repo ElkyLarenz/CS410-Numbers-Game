@@ -7,8 +7,10 @@ public class Player
     public int Won; // how many rounds they won
     private boolean connected = false;
     private int id;
-    public int[] hand;
+    public int[] hand = new int[20];
     public boolean wonRound = false; //helps tell if they won the round
+    public int handLoc = 0;
+  
 
     Player()
     {
@@ -56,19 +58,18 @@ public class Player
     {
     	return id;
     }
+    //------------------------------------------------------------------
     public void addNumber(int num)
     {
         //adds number from gui into player hand
 
-        int AddedNum = 0;
-        for (int i=0; i < hand.length; i++)
-        {
-            hand[i] = AddedNum;
-            AddedNum += num;
-        }
+      hand[handLoc] = num;
+      handLoc++;
 
 
     }
+    
+    //----------------------------------------------------------------------------
     public void randomNum()
     {
         //this is to generate a random number
@@ -112,5 +113,13 @@ public class Player
     {
     	wonRound = true;
     }
+	public void updateWholeHand(int[] in) 
+	{
+		// TODO Auto-generated method stub
+		hand = in;
+		
+	}
+	
+	
 }
 
