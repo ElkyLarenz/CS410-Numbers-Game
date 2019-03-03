@@ -4,10 +4,11 @@ public class Player
 {
     private String PlayerName;
     public int PlayerScore;
-    public int won;
+    public int Won; // how many rounds they won
     private boolean connected = false;
     private int id;
     public int[] hand;
+    public boolean wonRound = false; //helps tell if they won the round
 
     Player()
     {
@@ -21,6 +22,7 @@ public class Player
     }
 
 
+    
     public Player(String name, int ID)
     {
         PlayerName = name;
@@ -67,21 +69,12 @@ public class Player
 
 
     }
-    public int randomNum()
+    public void randomNum()
     {
         //this is to generate a random number
         int rand = (int)(Math.random() * 20 + 1);
 
-        return rand;
-    }
 
-    public int[] randomHand()
-    {
-        for(int i = 0; i <= 3; i++)
-        {
-            hand[i] = randomNum();
-        }
-        return hand;
     }
 
     public boolean setCheck()
@@ -95,10 +88,10 @@ public class Player
     }
     public int GetWon()
     {
-        return won;
+        return Won;
     }
     public int AddtoWon() {
-        return won++;
+        return Won++;
     }
     public void addScore(int in, int num)
     {
@@ -113,6 +106,11 @@ public class Player
     {
         int[] arr = hand;
         return arr;
+    }
+    
+    public void wonRound()
+    {
+    	wonRound = true;
     }
 }
 

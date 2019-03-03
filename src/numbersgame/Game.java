@@ -171,6 +171,18 @@ public class Game {
 		return round;
 	}
 	
+	//-------------------------------------------------------------------------------------
+	public void receiveHand(int[] in)
+	{
+		players[playerTurn].updateWholeHand(in);
+	}
+	
+	public void sendHand()
+	{
+		//here is going to be the code to send the hand
+	}
+	
+	//--------------------------------------------------------------------------------------
 	
 	public void setGUI(GUI in)
 	{
@@ -267,6 +279,7 @@ public class Game {
 	{
 		if(playerTurn == localPlayPos)
 		{
+			gameGUI.startTurn();
 			return true;
 		}
 		else
