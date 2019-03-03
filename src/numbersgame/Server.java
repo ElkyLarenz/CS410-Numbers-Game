@@ -3,6 +3,7 @@ package numbersgame;
 import java.io.*;
 import java.net.*;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +15,8 @@ class Server {
     private DatagramSocket broadcaster;
     private String hostName;
     private Game game;
+    private List<String> playerNames;
+    private List<String> hand;
 
     Server(Player host, Game game) throws IOException {
         this.ss = new ServerSocket(3333);
@@ -112,15 +115,15 @@ class Server {
 
         @Override
         public void run() {
-            String recieved;
+            String received;
             String toreturn;
             while (true) {
                 try {
                     BufferedReader in = new BufferedReader(new InputStreamReader(dis));
                     System.out.println("waiting for client input");
-                    while ((recieved = in.readLine()) != null) {
-                        System.out.println(recieved);
-                        readClientMessage(recieved);
+                    while ((received = in.readLine()) != null) {
+                        System.out.println(received);
+                        readClientMessage(received, dos);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -129,18 +132,57 @@ class Server {
         }
     }
 
-    private void readClientMessage(String inputString) {
+    private void readClientMessage(String inputString, DataOutputStream dos) throws IOException {
         ListIterator<String> in;
         List<String> inputList = Arrays.asList(inputString.split(","));
         in = inputList.listIterator();
-        System.out.println(in.toString());
 
         while (in.hasNext()) {
             switch (in.next()) {
                 case "NAME":
-                    game.addPlayer(in.next());
+                    updatePlayerNames(in.next());
+                    sendPlayerNames(dos);
+                    break;
+                case "HAND":
+                    updatePlayerHand(inputList);
+                    sendPlayerHand(dos);
                     break;
             }
         }
     }
+
+    // adds player name to the next open position in the array
+    private void updatePlayerNames(String name){
+        playerNames.add(name);
+    }
+
+    // sends playerNames[] to all clients
+    private void sendPlayerNames(DataOutputStream dos) throws IOException {
+        StringBuilder output = new StringBuilder();
+
+        output.append("NAMES,");
+        for (String playerName : playerNames) {
+                output.append(playerName).append(",");
+        }
+        dos.writeUTF(output.toString());
+    }
+
+    // update player hand (server-side)
+    private void updatePlayerHand(List<String> inputList){
+        inputList.remove(0);
+        hand = inputList;
+    }
+
+    // sends hand[] to all clients
+    private void sendPlayerHand(DataOutputStream dos) throws IOException {
+        StringBuilder output = new StringBuilder();
+
+        output.append("HAND,");
+        for (String hVal : hand) {
+                output.append(hVal).append(",");
+        }
+        dos.writeUTF(output.toString());
+
+    }
+
 }

@@ -2,9 +2,7 @@ package numbersgame;
 
 import java.io.*;
 import java.net.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class Client {
     private Boolean isHost;
@@ -112,8 +110,15 @@ public class Client {
         OutputStream outstream = socket.getOutputStream();
         PrintWriter out = new PrintWriter(outstream);
 
-        out.print("NAME");
-        out.print(name);
+        out.write("NAME," + name);
+    }
+
+    // send player hand to server
+    public void sendHand(int[] hand) throws IOException {
+        OutputStream outstream = socket.getOutputStream();
+        PrintWriter out = new PrintWriter(outstream);
+
+        out.write("HAND," + Arrays.toString(hand));
     }
 
     private void readServerMessage(String inputString) {
@@ -123,9 +128,35 @@ public class Client {
 
         while (in.hasNext()) {
             switch (in.next()) {
-                case "NAME":
-                    game.addPlayer(in.next());
+                case "NAME": // case for updating player turn
+                    updatePlayerNames(inputList);
+                    break;
+                case "HAND":
+                    updatePlayerHand(inputList);
+                    break;
             }
         }
+    }
+
+    // update the list of player names (client-side)
+    private void updatePlayerNames(List<String> inputList){
+        inputList.remove(0);
+        String[] names = new String[inputList.size()];
+        names = inputList.toArray(names);
+
+        game.addPlayer(names);
+    }
+
+    // update players hands (client-side)
+    private void updatePlayerHand(List<String> inputList){
+        inputList.remove(0);
+
+        int[] hand = new int[inputList.size()];
+        Iterator<String> itr = inputList.iterator();
+        for(int i = 0 ;  i < hand.length ; i++){
+            hand[i] = Integer.parseInt(itr.next());
+        }
+
+        game.receiveHand(hand);
     }
 }
