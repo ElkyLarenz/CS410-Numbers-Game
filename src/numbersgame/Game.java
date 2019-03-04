@@ -215,7 +215,8 @@ public class Game {
 					int temp = rnd.nextInt(19)+1;
 					boolean br = false;
 					do
-					{
+					{	if(temp == 0)
+							temp = rnd.nextInt(19)+1;
 						if(temp == tempHand[i][0])
 							temp = rnd.nextInt(19)+1;
 						else
@@ -232,6 +233,8 @@ public class Game {
 					boolean br = false;
 					do
 					{
+						if(temp == 0)
+							temp = rnd.nextInt(19)+1;
 						if(temp == tempHand[i][0])
 							temp = rnd.nextInt(19)+1;
 						if(temp == tempHand[i][1])
