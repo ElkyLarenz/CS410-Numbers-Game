@@ -35,6 +35,8 @@ public class GameHandPanel extends JPanel
 		
 		handLabel.setText( convertArray( numbers ) );
 		
+		System.out.println( "Player " + player.getID() + " (" + player.getPlayerName() + "): " + Arrays.toString( numbers ) );
+		
 		refresh();
 	}
 	
