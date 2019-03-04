@@ -105,18 +105,21 @@ class Server {
                     sendPlayerHand();
                     break;
                 case "SETUP":
-                    sendInitialHands(in.next());
+                    sendInitialHands(inputList);
                     break;
             }
         }
     }
 
     // sends 2d int array to players for hand setup
-    private void sendInitialHands(String in){
-        String output = "SETUP," +
-                in;
-        sendToAllConnected(output);
+    private void sendInitialHands(List<String> in){
+        in.remove(0);
+        StringBuilder output = new StringBuilder();
+        output.append("SETUP,");
+
+        sendToAllConnected(buildStandardDataList(output, in));
     }
+
     // adds player name to the next open position in the array
     private void updatePlayerNames(String name) {
         playerNames.add(name);
