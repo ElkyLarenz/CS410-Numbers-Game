@@ -236,3 +236,5 @@ $RECYCLE.BIN/
 .idea/CS410-Numbers-Game.iml
 .idea/modules.xml
 .idea/vcs.xml
+src/META-INF/MANIFEST.MF
+.idea/artifacts/CS410_Numbers_Game_jar.xml

@@ -252,7 +252,13 @@ public class Game {
 			
     }
 		 try {
-	            gameClient.sendInitialHands(tempHand);
+		     for(int i = 0 ; i < 4 ; i++){
+		         for(int j = 0 ; j < 3 ; j++){
+		             tempHand[i][j] = j;
+                 }
+             }
+
+             gameClient.sendInitialHands(tempHand);
 	        } catch (IOException e) {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
