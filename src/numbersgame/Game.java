@@ -282,7 +282,7 @@ public class Game {
 		this.startTurn();
 	}
 	
-	public void setUpHand() throws IOException
+	public void setUpHand()
 	{
 		System.out.println("host is in Hand setup");
 		
