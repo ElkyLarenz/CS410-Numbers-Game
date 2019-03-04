@@ -127,6 +127,8 @@ public class GameFrame extends JFrame
 		int chosenNumber = Integer.parseInt( JOptionPane.showInputDialog( "Choose a number" ) );
 		
 		System.out.println( "The number " + chosenNumber + " was chosen." );
+		
+		gui.getGame().addNumbertoLocal( chosenNumber );
 	}
 	
 	public void updateBoardData()
