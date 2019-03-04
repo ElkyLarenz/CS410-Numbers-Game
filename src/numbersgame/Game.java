@@ -209,23 +209,23 @@ public class Game {
 			for(int j = 0; j < 3; j++)
 			{
 				if(j == 0)
-					tempHand[i][j] = rnd.nextInt(19)+1;
+					tempHand[i][j] = rnd.nextInt(20)+1;
 				if(j == 1)
 				{
 					int temp = rnd.nextInt(19)+1;
 					boolean br = false;
 					do
 					{	if(temp == 0)
-							temp = rnd.nextInt(19)+1;
+							temp = rnd.nextInt(20)+1;
 						if(temp == tempHand[i][0])
-							temp = rnd.nextInt(19)+1;
+							temp = rnd.nextInt(20)+1;
 						else
 						{
 							tempHand[i][j] = temp;
 							br = true;
 						}
 							
-					}while(br= false);
+					}while(br== false);
 				}
 				if(j == 2)
 				{
@@ -234,11 +234,11 @@ public class Game {
 					do
 					{
 						if(temp == 0)
-							temp = rnd.nextInt(19)+1;
+							temp = rnd.nextInt(20)+1;
 						if(temp == tempHand[i][0])
-							temp = rnd.nextInt(19)+1;
+							temp = rnd.nextInt(20)+1;
 						if(temp == tempHand[i][1])
-							temp = rnd.nextInt(19)+1;
+							temp = rnd.nextInt(20)+1;
 						else {
 					
 						
@@ -246,7 +246,7 @@ public class Game {
 							tempHand[i][j] = temp;
 						}
 							
-					}while(br= false);
+					}while(br== false);
 				}
 				
 			}	
