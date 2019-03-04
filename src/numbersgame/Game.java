@@ -173,10 +173,6 @@ public class Game {
 	}
 	
 	
-	public void receiveHand(int[] in)
-	{
-		players[playerTurn].updateWholeHand(in);
-	}
 	
 	public void sendHand()
 	{
@@ -237,16 +233,6 @@ public class Game {
 			this.startRound();
 	}
 	
-	/*
-	 * The GUI will use this method to add the number the local player 
-	 * added to their hand
-	 */
-	public void addNumbertoLocal(int in)
-	{
-		players[localPlayPos].addNumber(in);
-		//method to send to server so server can up date hand
-	}
-	
 	public void addNumberToPlayer(int pos, int num)
 	{
 		players[pos].addNumber(num);
@@ -282,7 +268,7 @@ public class Game {
 		this.startTurn();
 	}
 	
-	public void setUpHand()
+	public void setUpHand() throws IOException
 	{
 		System.out.println("host is in Hand setup");
 		
@@ -346,6 +332,23 @@ public class Game {
 			return false;
 		}
 	}
+	
+	/*
+	 * The GUI will use this method to add the number the local player 
+	 * added to their hand
+	 */
+	public void addNumbertoLocal(int in) throws IOException
+	{
+		players[localPlayPos].addNumber(in);
+		gameClient.sendHand(players[localPlayPos].getHandNumbers());
+	}
+	
+	public void receiveHand(int[] in)
+	{
+		System.out.println("updated hand for player " + players[playerTurn].getPlayerName());
+		players[playerTurn].updateWholeHand(in);
+	}
+	
 	//------------------------------------------------------------------------------------------------------
 	
 
