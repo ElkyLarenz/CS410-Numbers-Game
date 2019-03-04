@@ -294,15 +294,19 @@ public class Game {
 			}	
 
 		}
-		//then send hand
+		gameClient.sendInnitialHands(tempHand);
 	}
 	
 	public void receiveSetupHand(int[][] in)
 	{
+		System.out.println("Your Hand ");
 		for(int i = 0; i < 4; i++)
 		{
 			for(int j = 0; j < 3; j++)
 			{
+				if(localPlayPos == i)
+					System.out.print(in[i][j] + " ");
+			
 				players[i].addNumber(in[i][j]);
 			}	
 
@@ -338,6 +342,8 @@ public class Game {
 	//------------------------------------------------------------------------------------------------------
 	
 
+	//---------------------------------------------------------------------------------
+	
 	
 	public boolean checkIfLocalHasAllSuperSet()
 	{
