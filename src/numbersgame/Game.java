@@ -98,47 +98,6 @@ public class Game {
 
 	}
 	
-	/*
-	 * This will check if the main player, this user 
-	 */
-	
-	public void SuperSetCheck()
-	{
-	// players[localPlayPos].setCheck();
-		int[] localHand = players[localPlayPos].getHandNumbers();
-		boolean overallSuperSet = false; // this will tell me if overall there was at least one superset
-		for(int i = 0; i < 4; i++)
-		{
-			if(i != localPlayPos)
-			{
-				int[] checkingHand = players[i].getHandNumbers();
-				boolean allSame = true;
-				for(int j = 0; j < localHand.length; j++)
-				{
-					for(int k= 0; k < checkingHand.length; k++)
-					{
-						if(localHand[j] != checkingHand[k])
-						{
-							allSame = false;
-						}
-							
-					}
-					
-				}
-				if(allSame == true)
-				{
-					superSets[localPlayPos][i] = true;
-					overallSuperSet = true;
-				}
-				
-			}
-		}
-		
-		if(overallSuperSet = true)
-		{
-			this.send2DArraytoGUI();
-		}
-	}
 	
 	/*
 	 * Gui uses this to get superset 2D array
@@ -354,8 +313,60 @@ public class Game {
 	{
 		System.out.println("updated hand for player " + players[playerTurn].getPlayerName());
 		players[playerTurn].updateWholeHand(in);
+		this.SuperSetCheck();
+		this.checkIfLocalHasAllSuperSet();
+		gameGUI.updateGameBoard();
+		
+		if(playerTurn == 3)
+			playerTurn = 0;
+		else
+			playerTurn++;
+		this.startTurn();
+		
 	}
 	
+
+	/*
+	 * This will check if the main player, this user 
+	 */
+	
+	public void SuperSetCheck()
+	{
+	// players[localPlayPos].setCheck();
+		int[] localHand = players[playerTurn].getHandNumbers();
+		boolean overallSuperSet = false; // this will tell me if overall there was at least one superset
+		for(int i = 0; i < 4; i++)
+		{
+			if(i != playerTurn)
+			{
+				int[] checkingHand = players[i].getHandNumbers();
+				boolean allSame = true;
+				for(int j = 0; j < localHand.length; j++)
+				{
+					for(int k= 0; k < checkingHand.length; k++)
+					{
+						if(localHand[j] != checkingHand[k])
+						{
+							allSame = false;
+						}
+							
+					}
+					
+				}
+				if(allSame == true)
+				{
+					superSets[playerTurn][i] = true;
+					overallSuperSet = true;
+				}
+				
+			}
+		}
+		
+		if(overallSuperSet = true)
+		{
+			this.send2DArraytoGUI();
+		}
+	}
 	//------------------------------------------------------------------------------------------------------
 	
 
@@ -367,7 +378,7 @@ public class Game {
 		boolean back = true;
 		for(int i = 0; i < 4; i++)
 		{
-			if(superSets[localPlayPos][i] == false)
+			if(superSets[playerTurn][i] == false)
 				back = false;
 		}
 		return back;
