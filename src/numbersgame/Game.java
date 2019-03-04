@@ -229,7 +229,7 @@ public class Game {
 				}
 				if(j == 2)
 				{
-					int temp = rnd.nextInt(19)+1;
+					int temp = rnd.nextInt(20)+1;
 					boolean br = false;
 					do
 					{
