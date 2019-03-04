@@ -17,6 +17,7 @@ public class GameHandPanel extends JPanel
 	public GameHandPanel( Player player, boolean isLocalPlayer )
 	{
 		this.player = player;
+		this.isLocalPlayer = isLocalPlayer;
 		
 		this.setLayout( new BorderLayout() );
 		
