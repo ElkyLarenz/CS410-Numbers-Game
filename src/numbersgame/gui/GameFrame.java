@@ -157,6 +157,7 @@ public class GameFrame extends JFrame
 		for ( int i = 0; i < handPanels.length; i++ )
 		{
 			handPanels[ i ].updateHand();
+			playerPanels[ i ].updateScore();
 		}
 	}
 	

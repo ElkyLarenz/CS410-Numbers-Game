@@ -35,6 +35,11 @@ public class GamePlayerPanel extends JPanel
 		this.add( nameLabel );
 	}
 	
+	public void updateScore()
+	{
+		nameLabel.setText( "Player " + player.getID() + ": " + player.getPlayerName() + "[" + player.getScore() + "]" );
+	}
+	
 	public Player getPlayer()
 	{
 		return player;
