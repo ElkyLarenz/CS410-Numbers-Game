@@ -99,7 +99,7 @@ public class Client {
     }
 
     // read server input messages
-    private void readServerMessage(String inputString) {
+    private void readServerMessage(String inputString) throws IOException {
         ListIterator<String> in;
         List<String> inputList = new ArrayList<>(Arrays.asList(inputString.split(",")));
         in = inputList.listIterator();
@@ -116,7 +116,7 @@ public class Client {
     }
 
     // update the list of player names (client-side)
-    private void updatePlayerNames(List<String> inputList) {
+    private void updatePlayerNames(List<String> inputList) throws IOException {
         inputList.remove(0);
         String[] names = new String[4];
         names = inputList.toArray(names);
