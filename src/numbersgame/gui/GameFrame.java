@@ -132,6 +132,11 @@ public class GameFrame extends JFrame
 	public void updateBoardData()
 	{
 		boardPanel.updateCells();
+		
+		for ( int i = 0; i < handPanels.length; i++ )
+		{
+			handPanels[ i ].updateHand();
+		}
 	}
 	
 	public GUI getGUI()
