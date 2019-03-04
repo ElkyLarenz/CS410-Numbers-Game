@@ -69,12 +69,7 @@ public class Game {
     }
 
     //This will add score from the main player("its the one on this device")
-    public void addScore(int in, int addedNum) {
-
-        players[localPlayPos].addScore(in, addedNum);
-
-    }
-
+ 
     /*
      * This will get the score from the player
      * to display in GUI, it returns an int
@@ -314,7 +309,8 @@ public class Game {
         System.out.println("updated hand for player " + players[playerTurn].getPlayerName());
         players[playerTurn].updateWholeHand(in);
         this.SuperSetCheck();
-        this.checkIfLocalHasAllSuperSet();
+       if( this.checkIfLocalHasAllSuperSet() == true);
+       		this.endRound();
         gameGUI.updateGameBoard();
 
         if (playerTurn == 3)
@@ -389,6 +385,7 @@ public class Game {
             if (superSets[playerTurn][i] == false)
                 back = false;
         }
+        System.out.println("Winner is player: " + players[playerTurn].getPlayerName());
         return back;
     }
 
@@ -414,5 +411,30 @@ public class Game {
         else
             localPlayPos++;
 
+    }
+    
+    public void endRound()
+    {
+    	System.out.println("END ROUND PHASE");
+    	for(int i = 0; i < 4; i++)
+    	{
+    		if(i == playerTurn)
+    		{
+    			int counter = 0;
+    			for(int j = 0; j < 20; j++)
+    			{
+    				if(players[i].hand[j] != 0) 
+    					counter++;
+    			}
+    			players[i].addScore(counter);
+    		}
+    		else
+    			players[i].addScore(10);
+    	}
+    	
+    	gameGUI.updateGameBoard();
+    	gameGUI.beginNewRound();
+    	this.shiftPlayers();
+    	this.startRound();
     }
 }

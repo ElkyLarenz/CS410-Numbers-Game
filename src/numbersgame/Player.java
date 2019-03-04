@@ -15,10 +15,7 @@ public class Player
     Player()
     {
         //default constructor
-    	for(int i = 0; i< 20;i++)
-    	{
-    		//hand[i] = null;
-    	}
+    	PlayerScore = 0;
 
     }
     @Override
@@ -98,12 +95,12 @@ public class Player
     public int AddtoWon() {
         return Won++;
     }
-    public void addScore(int in, int num)
+    public void addScore(int in)
     {
         //the score added is the number of cards in hand
 
 
-        in = in + num;
+        PlayerScore = in + PlayerScore;
 
     }
 
