@@ -252,12 +252,6 @@ public class Game {
 			
     }
 		 try {
-		     for(int i = 0 ; i < 4 ; i++){
-		         for(int j = 0 ; j < 3 ; j++){
-		             tempHand[i][j] = j + 1;
-                 }
-             }
-
              gameClient.sendInitialHands(tempHand);
 	        } catch (IOException e) {
 	            // TODO Auto-generated catch block
