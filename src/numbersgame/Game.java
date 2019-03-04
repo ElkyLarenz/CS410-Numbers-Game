@@ -212,7 +212,7 @@ public class Game {
 					tempHand[i][j] = rnd.nextInt(20)+1;
 				if(j == 1)
 				{
-					int temp = rnd.nextInt(19)+1;
+					int temp = rnd.nextInt(20)+1;
 					boolean br = false;
 					do
 					{	if(temp == 0)
