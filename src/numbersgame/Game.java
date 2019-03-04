@@ -282,8 +282,10 @@ public class Game {
 		this.startTurn();
 	}
 	
-	public void setUpHand()
+	public void setUpHand() throws IOException
 	{
+		System.out.println("host is in Hand setup");
+		
 		Random rnd = new Random();
 		int[][] tempHand = new int[4][3];
 		for(int i = 0; i < 4; i++)
@@ -294,7 +296,7 @@ public class Game {
 			}	
 
 		}
-		gameClient.sendInnitialHands(tempHand);
+		gameClient.sendInitialHands(tempHand);;
 	}
 	
 	public void receiveSetupHand(int[][] in)
