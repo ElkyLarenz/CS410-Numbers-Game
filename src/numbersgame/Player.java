@@ -104,6 +104,19 @@ public class Player
 
     }
 
+    public int totalNum()
+    {
+    	int bk = 0;
+    	for(int i = 0; i < hand.length; i++)
+    	{
+    		if(i != 0)
+    		{
+    			bk++;
+    		}
+    	}
+    	
+    	return 0;
+    }
     public int[] getHandNumbers()
     {
         int[] arr = hand;

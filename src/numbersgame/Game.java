@@ -188,6 +188,8 @@ public class Game {
         //enable gui of the player whos turn it is
     	this.setupSuperSet();
         playerTurn = 0;
+        System.out.println(host);
+        
         if (host == true)
             this.setUpHand();
         this.startTurn();
@@ -402,7 +404,7 @@ public class Game {
     public void shiftPlayers() {
         Player temp;
         temp = players[3];
-        for (int i = 2; i < 0; i--) {
+        for (int i = 0; i < 3; i++) {
             players[i + 1] = players[i];
         }
         players[0] = temp;
@@ -421,12 +423,7 @@ public class Game {
     	{
     		if(i == playerTurn)
     		{
-    			int counter = 0;
-    			for(int j = 0; j < 20; j++)
-    			{
-    				if(players[i].hand[j] != 0) 
-    					counter++;
-    			}
+    			int counter = players[i].totalNum();
     			players[i].addScore(counter);
     		}
     		else
@@ -438,7 +435,7 @@ public class Game {
     	players[localPlayPos].resetHand();
     	this.shiftPlayers();
     	this.changeRound();
-    	//this.setupSuperSet();
+    	this.setupSuperSet();
     	gameGUI.beginNewRound();
     	this.startRound();
     }
