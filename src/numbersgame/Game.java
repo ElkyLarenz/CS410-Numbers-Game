@@ -434,12 +434,12 @@ public class Game {
     	}
     	
     	gameGUI.updateGameBoard();
-    	//gameGUI.beginNewRound();
+    	
     	players[localPlayPos].resetHand();
     	this.shiftPlayers();
     	this.changeRound();
-    	this.setupSuperSet();
-    	
+    	//this.setupSuperSet();
+    	gameGUI.beginNewRound();
     	this.startRound();
     }
 }

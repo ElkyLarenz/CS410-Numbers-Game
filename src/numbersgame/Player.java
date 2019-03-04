@@ -122,6 +122,7 @@ public class Player
 	}
 	public void resetHand() {
 		// TODO Auto-generated method stub
+		System.out.println("reset Hand");
 		hand = new int[20];
 		handLoc = 0;
 		
