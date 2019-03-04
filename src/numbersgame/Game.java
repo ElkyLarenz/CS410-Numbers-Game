@@ -90,7 +90,7 @@ public class Game {
      *
      */
     public boolean[][] getSupersetArray() {
-        this.setupSuperSet();
+        
         return superSets;
     }
 
@@ -191,7 +191,7 @@ public class Game {
     //this starts the Round by checking if its players turn
     public void startRound() {
         //enable gui of the player whos turn it is
-
+    	this.setupSuperSet();
         playerTurn = 0;
         if (host == true)
             this.setUpHand();
