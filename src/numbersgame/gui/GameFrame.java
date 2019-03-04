@@ -124,11 +124,30 @@ public class GameFrame extends JFrame
 	
 	public void displayNumberInput()
 	{
-		int chosenNumber = Integer.parseInt( JOptionPane.showInputDialog( "Choose a number" ) );
+		String input = JOptionPane.showInputDialog( "Choose a number" );
 		
-		System.out.println( "The number " + chosenNumber + " was chosen." );
-		
-		gui.getGame().addNumbertoLocal( chosenNumber );
+		if ( !input.equals( "" ) )
+		{
+			int chosenNumber = Integer.parseInt( input );
+			
+			System.out.println( "The number " + chosenNumber + " was chosen." );
+			
+			Player localPlayer = gui.getGame().getLocalPlayerObject();
+			boolean hasNumber = false;
+			
+			for ( int i = 0; i < localPlayer.getHandNumbers().length; i++ )
+			{
+				if ( chosenNumber == localPlayer.getHandNumbers()[ i ] )
+					hasNumber = true;
+			}
+			
+			if ( !hasNumber )
+			{
+				gui.getGame().addNumbertoLocal( chosenNumber );
+				toggleButton( false );
+			} else
+				displayNumberInput();
+		}
 	}
 	
 	public void updateBoardData()
