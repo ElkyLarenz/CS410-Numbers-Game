@@ -1,26 +1,43 @@
 package numbersgame;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.ListIterator;
 
 
 public class networkTests {
     public static void main(String[] args) throws IOException {
-        // Create a 2D array
-        int[][] mat = new int[2][2];
-        mat[0][0] = 99;
-        mat[0][1] = 151;
-        mat[1][0] = 30;
-        mat[1][1] = 5;
+        int[][] hands = new int[4][3];
 
-        StringBuilder output = new StringBuilder();
-        output.append("SETUP,");
-        for(int i = 0 ; i < mat.length ; i++){
-            for(int j = 0 ; j < mat[i].length ; j++){
-                output.append(mat[i][j]).append(",");
+        for(int i = 0 ; i < hands.length ; i++){
+            for(int j = 0 ; j < hands[i].length ; j++){
+                hands[i][j] = j;
             }
         }
 
-        System.out.println(output);
+        StringBuilder output = new StringBuilder();
+        output.append("SETUP,");
+        for(int i = 0 ; i < hands.length ; i++){
+            for(int j = 0 ; j < hands[i].length ; j++){
+                output.append(hands[i][j]).append(",");
+            }
+        }
+
+        List<String> inputList = new ArrayList<>(Arrays.asList(output.toString().split(",")));
+        ListIterator<String> in = inputList.listIterator();
+
+        in.next();
+
+        for(int i = 0; i < 4; i++)
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                hands[i][j] = Integer.parseInt(in.next());
+            }
+        }
+
+        System.out.println(Arrays.deepToString(hands));
     }
 }
