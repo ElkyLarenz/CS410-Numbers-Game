@@ -167,7 +167,6 @@ public class Game {
 	}
 	
 	
-
     public void addNumberToPlayer(int pos, int num) {
         players[pos].addNumber(num);
     }
@@ -236,7 +235,7 @@ public class Game {
 						if(temp == tempHand[i][0])
 							temp = rnd.nextInt(19)+1;
 						if(temp == tempHand[i][1])
-							temp = rnd.nextInt();
+							temp = rnd.nextInt(19)+1;
 						else {
 					
 						
@@ -249,12 +248,16 @@ public class Game {
 				
 			}	
 
-
-        playerIndex++;
-        if (playerIndex == 5)
-            this.startRound();
-    }}
-
+					
+			
+    }
+		 try {
+	            gameClient.sendInitialHands(tempHand);
+	        } catch (IOException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        }
+	}
     public void receiveSetupHand(int[][] in) {
         System.out.println("Your Hand ");
         for (int i = 0; i < 4; i++) {
