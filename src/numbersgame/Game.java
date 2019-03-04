@@ -304,6 +304,8 @@ public class Game {
 			}	
 
 		}
+		gameGUI.updateGameBoard();
+		
 	}
 	
 	public void startTurn()
