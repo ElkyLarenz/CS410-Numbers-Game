@@ -167,6 +167,7 @@ public class Game {
 	}
 	
 	
+
     public void addNumberToPlayer(int pos, int num) {
         players[pos].addNumber(num);
     }
@@ -198,24 +199,61 @@ public class Game {
         this.startTurn();
     }
 
-    public void setUpHand() {
-        System.out.println("host is in Hand setup");
+    public void setUpHand()
+	{
+		System.out.println("host is in Hand setup");
+		boolean go = false;
+		Random rnd = new Random();
+		int[][] tempHand = new int[4][3];
+		for(int i = 0; i < 4; i++)
+		{
+			for(int j = 0; j < 3; j++)
+			{
+				if(j == 0)
+					tempHand[i][j] = rnd.nextInt(19)+1;
+				if(j == 1)
+				{
+					int temp = rnd.nextInt(19)+1;
+					boolean br = false;
+					do
+					{
+						if(temp == tempHand[i][0])
+							temp = rnd.nextInt(19)+1;
+						else
+						{
+							tempHand[i][j] = temp;
+							br = true;
+						}
+							
+					}while(br= false);
+				}
+				if(j == 2)
+				{
+					int temp = rnd.nextInt(19)+1;
+					boolean br = false;
+					do
+					{
+						if(temp == tempHand[i][0])
+							temp = rnd.nextInt(19)+1;
+						if(temp == tempHand[i][1])
+							temp = rnd.nextInt();
+						else {
+					
+						
+							br = true;
+							tempHand[i][j] = temp;
+						}
+							
+					}while(br= false);
+				}
+				
+			}	
 
-        Random rnd = new Random();
-        int[][] tempHand = new int[4][3];
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 3; j++) {
-                tempHand[i][j] = rnd.nextInt(19) + 1;
-            }
 
-        }
-        try {
-            gameClient.sendInitialHands(tempHand);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+        playerIndex++;
+        if (playerIndex == 5)
+            this.startRound();
+    }}
 
     public void receiveSetupHand(int[][] in) {
         System.out.println("Your Hand ");
