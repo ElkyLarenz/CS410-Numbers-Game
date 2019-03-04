@@ -434,8 +434,12 @@ public class Game {
     	}
     	
     	gameGUI.updateGameBoard();
-    	gameGUI.beginNewRound();
+    	//gameGUI.beginNewRound();
+    	players[localPlayPos].resetHand();
     	this.shiftPlayers();
+    	this.changeRound();
+    	this.setupSuperSet();
+    	
     	this.startRound();
     }
 }

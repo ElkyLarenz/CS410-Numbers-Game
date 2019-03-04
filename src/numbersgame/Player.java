@@ -120,6 +120,12 @@ public class Player
 		hand = in;
 		
 	}
+	public void resetHand() {
+		// TODO Auto-generated method stub
+		hand = new int[20];
+		handLoc = 0;
+		
+	}
 	
 	
 }
