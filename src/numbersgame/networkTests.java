@@ -6,14 +6,21 @@ import java.util.Arrays;
 
 public class networkTests {
     public static void main(String[] args) throws IOException {
-        Game game = new Game();
-        game.setName("Tim");
-        game.createClient(true);
+        // Create a 2D array
+        int[][] mat = new int[2][2];
+        mat[0][0] = 99;
+        mat[0][1] = 151;
+        mat[1][0] = 30;
+        mat[1][1] = 5;
 
-        int[] numbers = new int[] {1, 2, 3, 4};
+        StringBuilder output = new StringBuilder();
+        output.append("SETUP,");
+        for(int i = 0 ; i < mat.length ; i++){
+            for(int j = 0 ; j < mat[i].length ; j++){
+                output.append(mat[i][j]).append(",");
+            }
+        }
 
-        game.gameClient.sendHand(numbers);
-
-        System.out.println(Arrays.toString(game.getPlayerArray()));
+        System.out.println(output);
     }
 }

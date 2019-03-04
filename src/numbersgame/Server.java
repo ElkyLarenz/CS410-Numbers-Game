@@ -104,12 +104,19 @@ class Server {
                     updatePlayerHand(inputList);
                     sendPlayerHand();
                     break;
-
+                case "SETUP":
+                    sendInitialHands(in.next());
+                    break;
             }
         }
     }
 
-
+    // sends 2d int array to players for hand setup
+    private void sendInitialHands(String in){
+        String output = "SETUP," +
+                in;
+        sendToAllConnected(output);
+    }
     // adds player name to the next open position in the array
     private void updatePlayerNames(String name) {
         playerNames.add(name);

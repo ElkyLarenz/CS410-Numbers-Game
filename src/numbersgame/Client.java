@@ -98,8 +98,23 @@ public class Client {
         out.println(output.toString());
     }
 
+    public void sendInitialHands(int[][] hands) throws IOException {
+        OutputStream outstream = socket.getOutputStream();
+        PrintWriter out = new PrintWriter(outstream, true);
+
+        StringBuilder output = new StringBuilder();
+        output.append("SETUP,");
+        for(int i = 0 ; i < hands.length ; i++){
+            for(int j = 0 ; j < hands[i].length ; j++){
+                output.append(hands[i][j]).append(",");
+            }
+        }
+
+        out.println(output);
+    }
+
     // read server input messages
-    private void readServerMessage(String inputString) {
+    private void readServerMessage(String inputString) throws IOException {
         ListIterator<String> in;
         List<String> inputList = new ArrayList<>(Arrays.asList(inputString.split(",")));
         in = inputList.listIterator();
@@ -111,12 +126,28 @@ public class Client {
             case "HAND":
                 updatePlayerHand(inputList);
                 break;
-
+            case "SETUP":
+                setupPlayerHands(in);
+                break;
         }
     }
 
+    private void setupPlayerHands(ListIterator<String> in) {
+        int[][] hands = new int[4][3];
+
+        for(int i = 0; i < 4; i++)
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                hands[i][j] = Integer.parseInt(in.next());
+            }
+        }
+
+        game.receiveSetupHand(hands);
+    }
+
     // update the list of player names (client-side)
-    private void updatePlayerNames(List<String> inputList) {
+    private void updatePlayerNames(List<String> inputList) throws IOException {
         inputList.remove(0);
         String[] names = new String[4];
         names = inputList.toArray(names);
