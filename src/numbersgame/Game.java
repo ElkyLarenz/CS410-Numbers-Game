@@ -268,7 +268,7 @@ public class Game {
 		this.startTurn();
 	}
 	
-	public void setUpHand() throws IOException
+	public void setUpHand()
 	{
 		System.out.println("host is in Hand setup");
 		
@@ -337,10 +337,15 @@ public class Game {
 	 * The GUI will use this method to add the number the local player 
 	 * added to their hand
 	 */
-	public void addNumbertoLocal(int in) throws IOException
+	public void addNumbertoLocal(int in)
 	{
 		players[localPlayPos].addNumber(in);
-		gameClient.sendHand(players[localPlayPos].getHandNumbers());
+		try {
+			gameClient.sendHand(players[localPlayPos].getHandNumbers());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void receiveHand(int[] in)

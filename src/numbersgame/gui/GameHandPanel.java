@@ -30,11 +30,7 @@ public class GameHandPanel extends JPanel
 	
 	public void updateHand()
 	{
-		int[] numbers = new int[ 20 ];
-		for ( int i = 0; i < 5; i++ )
-		{
-			numbers[ i ] = i + 1;
-		}
+		int[] numbers = player.getHandNumbers();
 		
 		handLabel.setText( convertArray( numbers ) );
 		
@@ -57,7 +53,7 @@ public class GameHandPanel extends JPanel
 						handString.append( ", " );
 					if ( i == 10 )
 						handString.append( "<br>" );
-					if ( i < 3 )
+					if ( i < 3 && !isLocalPlayer )
 						handString.append( "?" );
 					else
 						handString.append( hand[ i ] );
