@@ -195,7 +195,7 @@ public class Game {
 	/*
 	 * GUI will use this method to input the name and send it to the client
 	 */
-	public void setName(String in) throws IOException
+	public void setName(String in)
 	{
 		
 		localPlayerName = in;
@@ -204,7 +204,7 @@ public class Game {
 	/*
 	 * Server side uses this method to add players as they are connected
 	 */
-	public void addPlayer(String[] name) throws IOException
+	public void addPlayer(String[] name)
 	{	
 		for(int i = 0; i < 4; i++)
 		{
@@ -272,7 +272,7 @@ public class Game {
 	//game methods
 	//----------------------------------------------------------------------------------------------
 	//this starts the Round by checking if its players turn
-	public void startRound() throws IOException
+	public void startRound()
 	{	
 		//enable gui of the player whos turn it is
 		
@@ -294,7 +294,12 @@ public class Game {
 			}	
 
 		}
-		gameClient.sendInnitialHands(tempHand);
+		try {
+			gameClient.sendInitialHands(tempHand);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void receiveSetupHand(int[][] in)

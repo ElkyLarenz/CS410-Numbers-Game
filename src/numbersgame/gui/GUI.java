@@ -69,19 +69,14 @@ public class GUI
 	
 	public void setPlayerName( String name )
 	{
-		try {
-			game.setName( name );
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		game.setName( name );
 	}
 	
 	public void connectToIP( String ipAddress )
 	{
+		System.out.println( "Connecting to " + ipAddress );
+		client.connectSocket( ipAddress );
 		try {
-			System.out.println( "Connecting to " + ipAddress );
-			client.connectSocket( ipAddress );
 			client.createPlayer( game.localPlayerName() );
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
