@@ -410,7 +410,7 @@ public class Game {
     public void shiftPlayers() {
         Player temp;
         temp = players[3];
-        for (int i = 0; i < 3; i++) {
+        for (int i = 3; i > 0; i--) {
             players[i + 1] = players[i];
         }
         players[0] = temp;
