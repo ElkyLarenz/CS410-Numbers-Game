@@ -158,7 +158,6 @@ public class Game {
 		}
 		players[playerIndex].setPlayerName(name);
 		*/
-<<<<<<< HEAD
 		gameGUI.playerConnected();
 	
 			
@@ -251,9 +250,6 @@ public class Game {
 				}
 				
 			}	
-=======
-        gameGUI.playerConnected();
->>>>>>> 33e4c84534f18db34256f0db6cd91253599ff509
 
 
         playerIndex++;
