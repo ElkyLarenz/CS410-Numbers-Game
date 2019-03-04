@@ -309,8 +309,10 @@ public class Game {
         System.out.println("updated hand for player " + players[playerTurn].getPlayerName());
         players[playerTurn].updateWholeHand(in);
         this.SuperSetCheck();
-       if( this.checkIfLocalHasAllSuperSet() == true);
+       if(this.checkIfLocalHasAllSuperSet() == true)
+       {
        		this.endRound();
+       }
         gameGUI.updateGameBoard();
 
         if (playerTurn == 3)
@@ -380,13 +382,12 @@ public class Game {
 
 
     public boolean checkIfLocalHasAllSuperSet() {
-        boolean back = true;
         for (int i = 0; i < 4; i++) {
             if (superSets[playerTurn][i] == false)
-                back = false;
+                return false;
         }
         System.out.println("Winner is player: " + players[playerTurn].getPlayerName());
-        return back;
+        return true;
     }
 
     public void tellGuiItsLocalTurn() {
