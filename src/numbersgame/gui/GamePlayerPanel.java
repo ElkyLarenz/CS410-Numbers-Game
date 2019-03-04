@@ -27,7 +27,6 @@ public class GamePlayerPanel extends JPanel
 		this.player = player;
 		
 		this.setLayout( new BorderLayout() );
-		this.setPreferredSize( new Dimension( 200, 200 ) );
 		
 		nameLabel = new JLabel( "Player " + player.getID() + ": " + player.getPlayerName(), SwingConstants.CENTER );
 		nameLabel.setFont( GameFrame.titleFont );
